@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Invoice</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .large-select {
+      width: 375px;
+      height: 40px;
+      font-size: 16px;
+    }
+
+    input.large-select {
+      width: 375px;
+      height: 40px;
+      font-size: 16px;
+    }
+
+    .remove-btn {
+      font-size: 20px;
+      padding: 2px 6px;
+      line-height: 1;
+      border-radius: 4px;
+    }
+
+    #items-list .item-box {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      background: #fafafa;
+      gap: 12px;
+    }
+
+    #items-list .remove-btn {
+      margin-left: auto;
+      background: #e74c3c;
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    /* #items-section input {
+      margin-right: 10px;
+      margin-bottom: 10px;
+      width: calc(20% - 10px);
+      box-sizing: border-box;
+    } */
+
+    @media (max-width: 600px) {
+      /* #items-section input {
+        width: calc(100% - 20px);
+        margin-right: 0;
+      } */
+
+      #items-list .item-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      #items-list .remove-btn {
+        margin: 8px 0 0 auto;
+      }
+
+    }
+
+
+
+
+    .form-container {
+      display: none;
+
+    }
+  </style>
+</head>
+
+<body>
+  <nav style="background-color: #9164c9; padding: 10px;">
+    <ul style="list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 40px;">
+      <li>
+        <a href="{{ url_for('invoice_form') }}"
+          style="color: white; text-decoration: none; font-weight: bold;">Invoice</a>
+      </li>
+      <li>
+        <a href="{{ url_for('analytics') }}"
+          style="color: white; text-decoration: none; font-weight: bold;">Analytics</a>
+      </li>
+      <li>
+        <a href="{{ url_for('logout') }}" style="color: white; text-decoration: none; font-weight: bold;">Logout</a>
+      </li>
+    </ul>
+  </nav>
+
+
+
+
+  <div class="container">
+    <form method="POST" action="/select_form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <h2>Select an Option</h2>
+      <select id="formSelector" class="large-select" onchange="showForm()">
+        <option value="">-- Select --</option>
+        <option value="Ply">Ply</option>
+        <option value="Metal">Metal</option>
+      </select>
+    </form>
+    <h2>Create Invoice</h2>
+    <div id="Ply" class="form-container">
+      <form id="invoiceForm" method="post" action="/generate">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="formSelector" value="Ply">
+        <!-- <label for="invoice_no">Invoice No</label>
+        <input type="number" id="invoice_no" name="invoice_no" required> -->
+
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" class="large-select"
+          style="width: 375px; height: 40px; font-size: 16px; padding: 4px 8px; box-sizing: border-box;" required>
+        <label for="customer_name">Select Customer:</label>
+        <select name="customer_name" id="customer_name" class="large-select">
+          <option value="" disabled selected>Select Customer</option>
+          {% for c in customers %}
+          <option value="{{c[0]}}|{{c[1]}}">{{c[0]}}:{{c[1]}}</option>
+          {% endfor %}
+        </select>
+        <!-- <label for="customer_name">Customer Name</label>
+        <input type="text" id="customer_name" name="customer_name" required>
+
+        <label for="Address">Address</label>
+        <input type="text" id="Address" name="Address" required>
+
+        <label for="GST">GST No.</label>
+        <input type="text" id="GST" name="GST" required> -->
+
+        <div id="items-section">
+          <h3>Items</h3>
+          <!-- Input fields always visible -->
+          <input type="text" id="desc" placeholder="Description" >
+          <input type="number" id="length" placeholder="Length (ft)" >
+          <input type="number" id="width" placeholder="Width (ft)" >
+          <input type="number" id="qty" placeholder="Qty" min="1" >
+          <input type="number" step="1" id="price" placeholder="Price" >
+          <br><button type="button" id="addItemBtn">Add Item</button>
+
+          <!-- List of added items -->
+          <div id="items-list"></div>
+
+          <br><label for="chcharge">Carting & Handling charges</label><br>
+          <input type="number" id="chcharge" name="chcharge" required ><br>
+          <button type="submit" formaction="/generate">Generate PDF Invoice</button><br><br>
+          <button type="submit" formaction="/preview">&nbsp;Preview PDF Invoice</button>
+        </div>
+      </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="Metal" class="form-container">
+      <form id="invoiceFormMetal" method="post" action="/generate">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="formSelector" value="Metal">
+        <!-- <label for="invoice_nometal">Invoice No</label>
+        <input type="number" id="invoice_nometal" name="invoice_nometal" required> -->
+
+        <label for="datemetal">Date</label>
+        <input type="date" id="datemetal" name="datemetal" class="large-select"
+          style="width: 375px; height: 40px; font-size: 16px; padding: 4px 8px; box-sizing: border-box;" required>
+
+        <label for="customer_namemetal">Select Customer:</label>
+        <select name="customer_namemetal" id="customer_namemetal" class="large-select">
+          <option value="" disabled selected>Select Customer</option>
+          {% for c in customers %}
+          <option value="{{c[0]}}|{{c[1]}}">{{c[0]}}:{{c[1]}}</option>
+          {% endfor %}
+        </select>
+
+        <!-- <label for="customer_namemetal">Customer Name</label>
+        <input type="text" id="customer_namemetal" name="customer_namemetal" required>
+
+        <label for="Addressmetal">Address</label>
+        <input type="text" id="Addressmetal" name="Addressmetal" required>
+
+        <label for="GSTmetal">GST No.</label>
+        <input type="text" id="GSTmetal" name="GSTmetal" required> -->
+
+        <div id="items-sectionmetal">
+          <h3>Items</h3>
+          <!-- Input fields always visible -->
+          <input type="text" id="descmetal" placeholder="Description">
+          <input type="text" id="hsnmetal" placeholder="HSN">
+          <input type="number" id="qtymetal" placeholder="Qty in Kgs" min="1">
+          <input type="number" step="1" id="pricemetal" placeholder="Price">
+          <br><button type="button" id="addItemBtnmetal">Add Item</button><br>
+          <div id="items-listmetal"></div>
+          <!-- List of added items -->
+          <br><label for="chchargemetal">Carting & Handling charges</label><br>
+          <input type="number" id="chchargemetal" name="chchargemetal" required><br>
+
+
+
+
+          <button type="submit" formaction="/generate">Generate PDF Invoice</button><br><br>
+          <button type="submit" formaction="/preview">&nbsp;Preview PDF Invoice</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+  <br>
+
+
+
+  <script>
+
+    function showForm() {
+      const selected = document.getElementById("formSelector").value;
+      const forms = document.getElementsByClassName("form-container");
+
+      // Hide all forms
+      for (let i = 0; i < forms.length; i++) {
+        forms[i].style.display = "none";
+      }
+
+      // Show selected form
+      if (selected) {
+        document.getElementById(selected).style.display = "block";
+      }
+    }
+
+
+
+
+
+
+
+
+
+    let itemIndex = 0;
+    const form = document.getElementById('invoiceForm');
+    const list = document.getElementById('items-list');
+    document.getElementById('addItemBtn').addEventListener('click', () => {
+      // Collect values
+      const fields = ['desc', 'length', 'width', 'qty', 'price'];
+      const values = {};
+      for (let f of fields) {
+        const el = document.getElementById(f);
+        values[f] = el.value.trim();
+        if (!values[f]) {
+          alert('Please fill all item fields');
+          return;
+        }
+      }
+      itemIndex++;
+      // Create hidden inputs
+      // Create one hidden input per item, storing JSON array
+      const itemArr = [
+        values.desc,
+        parseFloat(values.length),
+        parseFloat(values.width),
+        parseInt(values.qty),
+        parseFloat(values.price)
+      ];
+      const hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = 'items[]';
+      hidden.value = JSON.stringify(itemArr);
+      hidden.dataset.index = itemIndex;
+      form.appendChild(hidden);
+      // Create summary box
+      const box = document.createElement('div');
+      box.className = 'item-box';
+      box.dataset.index = itemIndex;
+      box.innerHTML = `
+          <span>${values.desc}</span>
+          <span>${values.length}ft × ${values.width}ft</span>
+          <span>Qty: ${values.qty}</span>
+          <span>₹${values.price} per sq.ft</span>
+          <button type="button" class="remove-btn">&minus;</button>
+        `;
+      list.appendChild(box);
+      // Clear inputs
+      fields.forEach(f => document.getElementById(f).value = '');
+      // Remove handler
+      box.querySelector('.remove-btn').addEventListener('click', () => {
+        // Remove corresponding hidden input
+        const inp = form.querySelector(`input[name="items[]"][data-index="${itemIndex}"]`);
+        if (inp) form.removeChild(inp);
+        // Remove summary box
+        list.removeChild(box);
+      });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    let itemIndexmetal = 0;
+    const formmetal = document.getElementById('invoiceFormMetal');
+    const listmetal = document.getElementById('items-listmetal');
+    document.getElementById('addItemBtnmetal').addEventListener('click', () => {
+      // Collect values
+      const fieldsmetal = ['descmetal', "hsnmetal", 'qtymetal', 'pricemetal'];
+      const valuesmetal = {};
+      for (let f of fieldsmetal) {
+        const elmetal = document.getElementById(f);
+        valuesmetal[f] = elmetal.value.trim();
+        if (!valuesmetal[f]) {
+          alert('Please fill all item fields');
+          return;
+        }
+      }
+      itemIndexmetal++;
+      // Create hidden inputs
+      // Create one hidden input per item, storing JSON array
+      const itemArrmetal = [
+        valuesmetal.descmetal,
+        valuesmetal.hsnmetal,
+        parseFloat(valuesmetal.qtymetal),
+        parseFloat(valuesmetal.pricemetal)
+
+      ];
+      const hiddenmetal = document.createElement('input');
+      hiddenmetal.type = 'hidden';
+      hiddenmetal.name = 'itemsmetal[]';
+      hiddenmetal.value = JSON.stringify(itemArrmetal);
+      hiddenmetal.dataset.index = itemIndexmetal;
+      formmetal.appendChild(hiddenmetal);
+      // Create summary box
+      const boxmetal = document.createElement('div');
+      boxmetal.className = 'item-box';
+      boxmetal.dataset.index = itemIndexmetal;
+      boxmetal.innerHTML = `
+          <span>${valuesmetal.descmetal}</span>
+          <span>HSN:${valuesmetal.hsnmetal}</span>
+          <span> ${valuesmetal.qtymetal} kgs </span>
+          <span>₹${valuesmetal.pricemetal} per kilograms</span>
+          <button type="button" class="remove-btn">&minus;</button>
+        `;
+      listmetal.appendChild(boxmetal);
+      // Clear inputs
+      fieldsmetal.forEach(f => document.getElementById(f).value = '');
+      // Remove handler
+      boxmetal.querySelector('.remove-btn').addEventListener('click', () => {
+        // Remove corresponding hidden input
+        const inpmetal = formmetal.querySelector(`input[name="items[]"][data-index="${itemIndexmetal}"]`);
+        if (inpmetal) formmetal.removeChild(inpmetal);
+        // Remove summary box
+        listmetal.removeChild(boxmetal);
+      });
+    });
+  </script>
+  </div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class="flashes">
+    {% for category, message in messages %}
+    <li class="flash {{ category }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+</body>
+
+
+</html>

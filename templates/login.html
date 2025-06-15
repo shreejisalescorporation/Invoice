@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Invoice App</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form method="post" action="/login">
+     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      {% if error %}
+        <p style="color:red;">{{ error }}</p>
+      {% endif %}
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Enter username" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter password" required><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</body>
+</html>

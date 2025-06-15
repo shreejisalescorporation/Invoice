@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #000;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .totals {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .totals span {
+            display: inline-block;
+            width: 180px;
+        }
+
+        .page-footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        .page-footer a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Shreeji Sales Corporation</h2>
+    <h3>Invoice Statement</h3>
+
+    {% if results %}
+    <table>
+        <thead>
+            <tr>
+                <th>Invoice No</th>
+                <th>GST</th>
+                <th>Customer Name</th>
+                <th>Date</th>
+                <th>Taxable Value</th>
+                <th>CGST</th>
+                <th>SGST</th>
+                <th>Grand Total</th>
+                <th>HSN Codes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in results %}
+            <tr>
+                <td>{{row[0]}}</td> <!-- invoice_no -->
+                <td>{{row[1]}}</td> <!-- gst -->
+                <td>{{row[2]}}</td> <!-- customer_name -->
+                <td>{{row[3]}}</td> <!-- date -->
+                <td>{{row[4]}}</td>
+                <td>{{row[5]}}</td>
+                <td>{{row[6]}}</td>
+                <td>{{row[7]}}</td>
+                <td>
+                    <!-- {# row[8] is the HSN array; show as comma-separated #}
+                    {{ row[8] | join(", ") }} -->
+                    {{row[8]}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="totals">
+        <span><strong>Sum of Taxable Value:</strong> ₹{{sums[3]}}</span><br>
+        <span><strong>Sum of CGST:</strong> ₹{{sums[0]}}</span><br>
+        <span><strong>Sum of SGST:</strong> ₹{{sums[1]}}</span><br>
+        <span><strong>Sum of Grand Total:</strong> ₹{{sums[4]}}</span><br>
+        <span><strong>Sum of Total Tax:</strong> ₹{{sums[2]}}</span>
+    </div>
+    {% endif %}
+
+</body>
+
+</html>
