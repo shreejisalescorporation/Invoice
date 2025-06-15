@@ -312,7 +312,7 @@ def generate_invoice():
 def create_pdf(context,form_type):
     if(form_type=="Ply"):
         rendered_html = render_template('invoiceply.html', **context)
-        pdfkit_config = pdfkit.configuration(wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe")
+        pdfkit_config = pdfkit.configuration(wkhtmltopdf="/usr/bin/wkhtmltopdf")
         pdf = pdfkit.from_string(rendered_html, False, configuration=pdfkit_config,
                                 options={
                 'page-size':       'A4',        # or 'Letter', etc.
@@ -330,7 +330,7 @@ def create_pdf(context,form_type):
         return pdf
     else:
         rendered_html = render_template('invoicemetal.html', **context)
-        pdfkit_config = pdfkit.configuration(wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe")
+        pdfkit_config = pdfkit.configuration(wkhtmltopdf="/usr/bin/wkhtmltopdf"")
         pdf = pdfkit.from_string(rendered_html, False, configuration=pdfkit_config,
                                 options={
                 'page-size':       'A4',        # or 'Letter', etc.
@@ -503,7 +503,7 @@ def analysis_pdf():
 
     # Convert to PDF
     pdfkit_config = pdfkit.configuration(
-        wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+        wkhtmltopdf="/usr/bin/wkhtmltopdf"
     )
     pdf = pdfkit.from_string(rendered_html, False,
                              configuration=pdfkit_config,
