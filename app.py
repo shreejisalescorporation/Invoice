@@ -330,7 +330,7 @@ def create_pdf(context,form_type):
         return pdf
     else:
         rendered_html = render_template('invoicemetal.html', **context)
-        pdfkit_config = pdfkit.configuration(wkhtmltopdf="/usr/bin/wkhtmltopdf"")
+        pdfkit_config = pdfkit.configuration(wkhtmltopdf="/usr/bin/wkhtmltopdf")
         pdf = pdfkit.from_string(rendered_html, False, configuration=pdfkit_config,
                                 options={
                 'page-size':       'A4',        # or 'Letter', etc.
@@ -502,9 +502,7 @@ def analysis_pdf():
                                     sums=sums)
 
     # Convert to PDF
-    pdfkit_config = pdfkit.configuration(
-        wkhtmltopdf="/usr/bin/wkhtmltopdf"
-    )
+    pdfkit_config = pdfkit.configuration(wkhtmltopdf="/usr/bin/wkhtmltopdf")
     pdf = pdfkit.from_string(rendered_html, False,
                              configuration=pdfkit_config,
                              options={
