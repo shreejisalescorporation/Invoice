@@ -2,7 +2,7 @@ name: Ping Supabase Every 6 Days
 
 on:
   schedule:
-    # Runs every 6 days at 12:00 UTC
+    # Runs every 6 days at 3:00 AM IST (21:30 UTC)
     - cron: '30 21 */6 * *'
   workflow_dispatch:  # Allows manual trigger from Actions tab
 
@@ -12,11 +12,20 @@ jobs:
 
     steps:
       - name: Ping Supabase with Auth Header
-        run: |
-          echo "Pinging Supabase endpoint..."
-          curl -s -o /dev/null -w "%{http_code}\n" "$SUPABASE_ENDPOINT" \
-            -H "apikey: $SUPABASE_API_KEY" \
-            -H "Authorization: Bearer $SUPABASE_API_KEY"
         env:
           SUPABASE_ENDPOINT: https://iqiytljbybypssagzmoy.supabase.co/rest/v1/customer?select=id&limit=1
           SUPABASE_API_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          echo "Pinging Supabase endpoint..."
+          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SUPABASE_ENDPOINT" \
+            -H "apikey: $SUPABASE_API_KEY" \
+            -H "Authorization: Bearer $SUPABASE_API_KEY")
+
+          if [ "$STATUS_CODE" -eq 200 ]; then
+            echo "Ping successful"
+          else
+            echo "Ping failed with status code: $STATUS_CODE"
+            exit 1
+          fi
+
+        
