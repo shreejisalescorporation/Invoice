@@ -19,4 +19,4 @@ jobs:
             -H "Authorization: Bearer $SUPABASE_API_KEY"
         env:
           SUPABASE_ENDPOINT: https://iqiytljbybypssagzmoy.supabase.co/rest/v1/customer?select=gst&limit=1
-          SUPABASE_API_KEY: ${{ secrets.SUPABASE_KEY }}  
+          SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}  
