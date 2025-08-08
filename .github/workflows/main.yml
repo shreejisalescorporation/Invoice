@@ -2,22 +2,33 @@ name: Ping Supabase Every 6 Days
 
 on:
   schedule:
-    # Runs every 6 days at 12:00 UTC
-    - cron: '30 21 */6 * *'
-  workflow_dispatch:  # Allows manual trigger from Actions tab
+    - cron: '30 21 */6 * *'  # Runs every 6 days at 3 AM IST
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   ping:
     runs-on: ubuntu-latest
 
+    env:  # <-- This goes here, not inside steps!
+      SUPABASE_ENDPOINT: https://iqiytljbybypssagzmoy.supabase.co/rest/v1/customer?select=id&limit=1
+      SUPABASE_API_KEY: ${{ secrets.SUPABASE_KEY }}
+
     steps:
       - name: Ping Supabase with Auth Header
         run: |
-          echo "Pinging Supabase endpoint..."
-          curl -s -o /dev/null -w "%{http_code}\n" "$SUPABASE_ENDPOINT" \
-            -H "apikey: $SUPABASE_API_KEY" \
-            -H "Authorization: Bearer $SUPABASE_API_KEY"
-        env:
-          SUPABASE_ENDPOINT: https://iqiytljbybypssagzmoy.supabase.co/rest/v1/customer?select=id&limit=1
-          SUPABASE_API_KEY: ${{ secrets.SUPABASE_KEY }}  
-        
+          echo "Pinging Supabase endpoint: $SUPABASE_ENDPOINT"
+          
+          RESPONSE=$(curl -s -i -w "\nHTTP_STATUS:%{http_code}" "$SUPABASE_ENDPOINT" \
+            -H "apikey: $SUPABASE_API_KEY")
+
+          echo "Full response:"
+          echo "$RESPONSE"
+
+          STATUS_CODE=$(echo "$RESPONSE" | grep HTTP_STATUS | cut -d':' -f2)
+
+          if [ "$STATUS_CODE" -eq 200 ]; then
+            echo "Ping successful"
+          else
+            echo "Ping failed with status code: $STATUS_CODE"
+            exit 1
+          fi
