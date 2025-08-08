@@ -1,60 +1,90 @@
-from flask import Flask, render_template, redirect, url_for, request, send_file, Response, jsonify, flash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask import Flask, render_template, redirect, url_for, request,send_file,Response,jsonify,flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user,current_user
 import pdfkit
+import pickle
 from num2words import num2words
-import io
 import base64
 import requests
-from supabase import create_client, Client
+from supabase import create_client,Client
 import tempfile
 import json
 import os
-import pg8000
 from datetime import datetime
 from dotenv import load_dotenv
 from werkzeug.security import check_password_hash
 from flask_wtf import CSRFProtect
 from flask_wtf.csrf import generate_csrf
 from google.oauth2 import service_account
+from googleapiclient.http import MediaFileUpload
+from google.auth.transport.requests import Request 
+from google_auth_oauthlib.flow import InstalledAppFlow   
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
+from reportlab.lib.pagesizes import A4
+
 
 load_dotenv()
-INVOICE_FOLDER_ID = os.getenv("INVOICE_FOLDER_ID")
-STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
-
+# INVOICE_FOLDER_ID   = os.getenv("INVOICE_FOLDER_ID")
+# STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
+SERVICE_ACCOUNT_EMAIL = os.getenv("SERVICE_ACCOUNT_EMAIL")
 SCOPES = ["https://www.googleapis.com/auth/drive"]
-
-
+TOKEN_PATH = 'token.pickle'
+CREDENTIALS_PATH = 'credentials.json'
 def get_drive_service():
     """
     Authenticates using the service account key pointed to by
     GOOGLE_APPLICATION_CREDENTIALS and returns a Drive v3 service.
     """
-    creds = service_account.Credentials.from_service_account_file(
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"], scopes=SCOPES)
-    return build("drive", "v3", credentials=creds, cache_discovery=False)
+    creds = None
+    # 2) Load cached credentials if they exist
+    if os.path.exists(TOKEN_PATH):
+        with open(TOKEN_PATH, 'rb') as token_file:
+            creds = pickle.load(token_file)
 
+    # 3) If there are no valid creds, run the flow
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
+            creds = flow.run_local_server(port=8080)
+        # 4) Save the credentials for next time
+        with open(TOKEN_PATH, 'wb') as token_file:
+            pickle.dump(creds, token_file)
 
+    # 5) Build and return the Drive service
+    return build('drive', 'v3', credentials=creds, cache_discovery=False)
+
+    # creds = service_account.Credentials.from_service_account_file(
+    #     os.environ["GOOGLE_APPLICATION_CREDENTIALS"], scopes=SCOPES
+    # )
+    # return build("drive", "v3", credentials=creds, cache_discovery=False)
 def upload_pdf(filepath: str, filename: str, to_folder: str) -> str:
     """
     Uploads a PDF to Drive into the specified folder.
     Returns the fileId.
     to_folder should be either 'invoice' or 'statement'.
     """
+    INVOICE_FOLDER_ID   = os.getenv("INVOICE_FOLDER_ID")
+    STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
+
     service = get_drive_service()
-    folder_id = INVOICE_FOLDER_ID if to_folder == "invoice" else STATEMENT_FOLDER_ID
+    folder_id = INVOICE_FOLDER_ID if to_folder.lower() == 'invoice' else STATEMENT_FOLDER_ID
 
     file_metadata = {
-        "name": filename,
-        "parents": [folder_id],
+        'name': filename,
+        'parents': [folder_id],
     }
-    media = MediaFileUpload(filepath, mimetype="application/pdf")
-    uploaded = service.files().create(body=file_metadata,
-                                      media_body=media,
-                                      fields="id, webViewLink").execute()
-    return uploaded["id"], uploaded["webViewLink"]
+    media = MediaFileUpload(filepath, mimetype='application/pdf')
 
+    file = service.files().create(
+        body=file_metadata,
+        media_body=media,
+        fields='id, webViewLink',
+        supportsAllDrives=True
+    ).execute()
+
+    return file['id'], file['webViewLink']
 
 app = Flask(__name__)
 app.config['WTF_CSRF_SECRET_KEY'] = os.getenv("WTF_CSRF_SECRET_KEY")
@@ -580,3 +610,4 @@ if __name__ == '__main__':
     with app.app_context():
         load_customers()
     app.run(host='0.0.0.0', port=5500, debug=False)
+
