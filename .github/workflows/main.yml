@@ -16,11 +16,15 @@ jobs:
           SUPABASE_ENDPOINT: https://iqiytljbybypssagzmoy.supabase.co/rest/v1/customer?select=id&limit=1
           SUPABASE_API_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
-          echo "Pinging Supabase endpoint..."
-          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SUPABASE_ENDPOINT" \
+          echo "Pinging Supabase endpoint: $SUPABASE_ENDPOINT"
+          RESPONSE=$(curl -s -w "\nStatus Code: %{http_code}" "$SUPABASE_ENDPOINT" \
             -H "apikey: $SUPABASE_API_KEY" \
             -H "Authorization: Bearer $SUPABASE_API_KEY")
-
+        
+          echo "$RESPONSE"
+        
+          STATUS_CODE=$(echo "$RESPONSE" | tail -n1 | cut -d' ' -f3)
+        
           if [ "$STATUS_CODE" -eq 200 ]; then
             echo "Ping successful"
           else
