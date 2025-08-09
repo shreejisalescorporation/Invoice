@@ -16,6 +16,7 @@ jobs:
         shell: cmd
         run: |
           echo Pinging Supabase endpoint...
+          echo "Key length: ${#SUPABASE_API_KEY}"
           curl -i "https://iqiytljbybypssagzmoy.supabase.co/rest/v1/customer?select=gst&limit=1" ^
             -H "apikey: %SUPABASE_API_KEY%" ^
             -H "Authorization: Bearer %SUPABASE_API_KEY%"
