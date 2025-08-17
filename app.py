@@ -20,7 +20,6 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow   
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from reportlab.lib.pagesizes import A4
 
 
 load_dotenv()
@@ -610,4 +609,5 @@ if __name__ == '__main__':
     with app.app_context():
         load_customers()
     app.run(host='0.0.0.0', port=5500, debug=False)
+
 
