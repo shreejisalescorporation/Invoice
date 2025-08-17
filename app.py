@@ -29,6 +29,32 @@ SERVICE_ACCOUNT_EMAIL = os.getenv("SERVICE_ACCOUNT_EMAIL")
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 TOKEN_PATH = 'token.pickle'
 CREDENTIALS_PATH = 'credentials.json'
+
+def _load_service_account_info():
+    raw = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+    if raw:
+        info = json.loads(raw)
+    else:
+        b64 = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64")
+        decoded = base64.b64decode(b64)
+        info = json.loads(decoded)
+    required = ["type", "client_email", "private_key", "token_uri"]
+    missing = [k for k in required if k not in info]
+    if missing:
+        raise ValueError(f"Missing service account fields: {missing}")
+    return info
+
+
+
+
+
+
+
+
+
+
+
+
 def get_drive_service():
     """
     Authenticates using the service account key pointed to by
@@ -61,7 +87,7 @@ def get_drive_service():
 
 
 
-    service_account_info = json.loads(os.environ["GOOGLE_APPLICATION_CREDENTIALS_JSON"])
+    service_account_info =_load_service_account_info() 
     creds = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
     return build("drive", "v3", credentials=creds)
 def upload_pdf(filepath: str, filename: str, to_folder: str) -> str:
@@ -615,6 +641,7 @@ if __name__ == '__main__':
     with app.app_context():
         load_customers()
     app.run(host='0.0.0.0', port=5500, debug=False)
+
 
 
 
