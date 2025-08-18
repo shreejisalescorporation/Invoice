@@ -23,99 +23,240 @@ from googleapiclient.http import MediaFileUpload
 
 
 load_dotenv()
-# INVOICE_FOLDER_ID   = os.getenv("INVOICE_FOLDER_ID")
-# STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
-SERVICE_ACCOUNT_EMAIL = os.getenv("SERVICE_ACCOUNT_EMAIL")
-SCOPES = ["https://www.googleapis.com/auth/drive"]
-TOKEN_PATH = 'token.pickle'
-CREDENTIALS_PATH = 'credentials.json'
 
-def _load_service_account_info():
-    raw = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+
+
+
+SCOPES = ["https://www.googleapis.com/auth/drive.file"]  # least privilege
+INVOICE_FOLDER_ID = os.getenv("INVOICE_FOLDER_ID")
+STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
+
+def _load_client_info_from_env():
+    """
+    Load OAuth client credentials (client_id/client_secret) from env.
+    Supports raw JSON string in GOOGLE_CREDENTIALS_JSON or base64 in GOOGLE_CREDENTIALS_BASE64.
+    Returns dict (the "installed" or "web" block or top-level content).
+    """
+    raw = os.getenv("GOOGLE_CREDENTIALS_JSON")
     if raw:
-        info = json.loads(raw)
+        j = json.loads(raw)
     else:
-        b64 = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64")
-        decoded = base64.b64decode(b64)
-        info = json.loads(decoded)
-    required = ["type", "client_email", "private_key", "token_uri"]
-    missing = [k for k in required if k not in info]
-    if missing:
-        raise ValueError(f"Missing service account fields: {missing}")
-    return info
+        b64 = os.getenv("GOOGLE_CREDENTIALS_BASE64")
+        if not b64:
+            return {}
+        j = json.loads(base64.b64decode(b64).decode("utf-8"))
+    # client secrets file may have 'installed' or 'web' wrapper
+    top = j.get("installed") or j.get("web") or j
+    return top
 
-
-
-
-
-
-
-
-
-
-
+def _load_creds_from_env():
+    """
+    Load pickled credentials from GOOGLE_TOKEN_B64 (base64 of token.pickle).
+    Returns google.oauth2.credentials.Credentials instance or raises.
+    """
+    token_b64 = os.getenv("GOOGLE_TOKEN_B64")
+    if not token_b64:
+        raise RuntimeError("Missing GOOGLE_TOKEN_B64 environment variable (base64 token.pickle).")
+    try:
+        token_bytes = base64.b64decode(token_b64)
+        creds = pickle.loads(token_bytes)
+    except Exception as e:
+        raise RuntimeError("Failed to decode or unpickle GOOGLE_TOKEN_B64.") from e
+    return creds
 
 def get_drive_service():
-    """
-    Authenticates using the service account key pointed to by
-    GOOGLE_APPLICATION_CREDENTIALS and returns a Drive v3 service.
-    """
-    # creds = None
-    # # 2) Load cached credentials if they exist
-    # if os.path.exists(TOKEN_PATH):
-    #     with open(TOKEN_PATH, 'rb') as token_file:
-    #         creds = pickle.load(token_file)
+    # Load creds and client info
+    creds = _load_creds_from_env()
+    client_info = _load_client_info_from_env()
 
-    # # 3) If there are no valid creds, run the flow
-    # if not creds or not creds.valid:
-    #     if creds and creds.expired and creds.refresh_token:
-    #         creds.refresh(Request())
-    #     else:
-    #         flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
-    #         creds = flow.run_local_server(port=8080)
-    #     # 4) Save the credentials for next time
-    #     with open(TOKEN_PATH, 'wb') as token_file:
-    #         pickle.dump(creds, token_file)
+    # Ensure creds has client_id/client_secret (some pickled objects may not)
+    if not getattr(creds, "client_id", None) and client_info.get("client_id"):
+        creds.client_id = client_info.get("client_id")
+    if not getattr(creds, "client_secret", None) and client_info.get("client_secret"):
+        creds.client_secret = client_info.get("client_secret")
 
-    # # 5) Build and return the Drive service
-    # return build('drive', 'v3', credentials=creds, cache_discovery=False)
+    # Refresh if expired and refresh_token exists
+    if creds and creds.expired and getattr(creds, "refresh_token", None):
+        try:
+            creds.refresh(Request())
+        except Exception as e:
+            # fail early with useful message (do not print secrets)
+            raise RuntimeError("Failed to refresh access token. Maybe refresh token revoked or creds mismatched.") from e
 
-    # creds = service_account.Credentials.from_service_account_file(
-    #     os.environ["GOOGLE_APPLICATION_CREDENTIALS"], scopes=SCOPES
-    # )
-    # return build("drive", "v3", credentials=creds, cache_discovery=False)
+    if not creds or not creds.valid:
+        raise RuntimeError("Invalid credentials. Ensure GOOGLE_TOKEN_B64 and GOOGLE_CREDENTIALS_JSON match and token has refresh_token.")
 
+    service = build("drive", "v3", credentials=creds, cache_discovery=False)
+    return service
 
-
-    service_account_info =_load_service_account_info() 
-    creds = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
-    return build("drive", "v3", credentials=creds)
-def upload_pdf(filepath: str, filename: str, to_folder: str) -> str:
-    """
-    Uploads a PDF to Drive into the specified folder.
-    Returns the fileId.
-    to_folder should be either 'invoice' or 'statement'.
-    """
-    INVOICE_FOLDER_ID   = os.getenv("INVOICE_FOLDER_ID")
-    STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
+def upload_pdf(filepath: str, filename: str, to_folder: str):
+    folder_id = INVOICE_FOLDER_ID if to_folder.lower() == "invoice" else STATEMENT_FOLDER_ID
+    if not folder_id:
+        raise RuntimeError("Folder ID not configured in INVOICE_FOLDER_ID / STATEMENT_FOLDER_ID")
 
     service = get_drive_service()
-    folder_id = INVOICE_FOLDER_ID if to_folder.lower() == 'invoice' else STATEMENT_FOLDER_ID
+    media = MediaFileUpload(filepath, mimetype="application/pdf")
+    file_metadata = {"name": filename, "parents": [folder_id]}
 
-    file_metadata = {
-        'name': filename,
-        'parents': [folder_id],
-    }
-    media = MediaFileUpload(filepath, mimetype='application/pdf')
-
-    file = service.files().create(
+    res = service.files().create(
         body=file_metadata,
         media_body=media,
-        fields='id, webViewLink',
-        supportsAllDrives=True
+        fields="id, webViewLink"
     ).execute()
+    return res.get("id"), res.get("webViewLink")
 
-    return file['id'], file['webViewLink']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # INVOICE_FOLDER_ID   = os.getenv("INVOICE_FOLDER_ID")
+# # STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
+# SERVICE_ACCOUNT_EMAIL = os.getenv("SERVICE_ACCOUNT_EMAIL")
+# SCOPES = ["https://www.googleapis.com/auth/drive"]
+# TOKEN_PATH = 'token.pickle'
+# CREDENTIALS_PATH = 'credentials.json'
+
+# def _load_service_account_info():
+#     raw = os.getenv("GOOGLE_CREDENTIALS_JSON")
+#     if raw:
+#         info = json.loads(raw)
+#     else:
+#         b64 = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64")
+#         decoded = base64.b64decode(b64)
+#         info = json.loads(decoded)
+#     required = ["type", "client_email", "private_key", "token_uri"]
+#     missing = [k for k in required if k not in info]
+#     if missing:
+#         raise ValueError(f"Missing service account fields: {missing}")
+
+#     token_b64 = os.getenv("GOOGLE_TOKEN_B64")
+#     if not token_b64:
+#         raise RuntimeError("Missing GOOGLE_TOKEN_B64 (base64 token.pickle)")
+
+#     token_bytes = base64.b64decode(token_b64)
+#     creds = pickle.loads(token_bytes)
+#     return creds,info
+
+
+# def get_drive_service():
+#     """
+#     Authenticates using the service account key pointed to by
+#     GOOGLE_APPLICATION_CREDENTIALS and returns a Drive v3 service.
+#     """
+#     # creds = None
+#     # # 2) Load cached credentials if they exist
+#     # if os.path.exists(TOKEN_PATH):
+#     #     with open(TOKEN_PATH, 'rb') as token_file:
+#     #         creds = pickle.load(token_file)
+
+#     # # 3) If there are no valid creds, run the flow
+#     # if not creds or not creds.valid:
+#     #     if creds and creds.expired and creds.refresh_token:
+#     #         creds.refresh(Request())
+#     #     else:
+#     #         flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
+#     #         creds = flow.run_local_server(port=8080)
+#     #     # 4) Save the credentials for next time
+#     #     with open(TOKEN_PATH, 'wb') as token_file:
+#     #         pickle.dump(creds, token_file)
+
+#     # # 5) Build and return the Drive service
+#     # return build('drive', 'v3', credentials=creds, cache_discovery=False)
+
+#     # creds = service_account.Credentials.from_service_account_file(
+#     #     os.environ["GOOGLE_APPLICATION_CREDENTIALS"], scopes=SCOPES
+#     # )
+#     # return build("drive", "v3", credentials=creds, cache_discovery=False)
+
+
+
+#     creds, client_info =_load_service_account_info() 
+#         # Refresh if needed
+#     if creds and creds.expired and creds.refresh_token:
+#         creds.refresh(Request())
+#         # NOTE: creds now has a new access_token; however we cannot update Render env automatically.
+#         # If you want to capture the refreshed token.pickle, fetch and re-base64 it locally and update env var.
+
+#     if not creds or not creds.valid:
+#         raise RuntimeError("Credentials invalid. Generate token.pickle locally with offline access.")
+
+#     # creds = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+#     return build("drive", "v3", credentials=creds, cache_discovery=False)
+# def upload_pdf(filepath: str, filename: str, to_folder: str) -> str:
+#     """
+#     Uploads a PDF to Drive into the specified folder.
+#     Returns the fileId.
+#     to_folder should be either 'invoice' or 'statement'.
+#     """
+#     INVOICE_FOLDER_ID   = os.getenv("INVOICE_FOLDER_ID")
+#     STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
+
+#     service = get_drive_service()
+#     folder_id = INVOICE_FOLDER_ID if to_folder.lower() == 'invoice' else STATEMENT_FOLDER_ID
+
+#     file_metadata = {
+#         'name': filename,
+#         'parents': [folder_id],
+#     }
+#     media = MediaFileUpload(filepath, mimetype='application/pdf')
+
+#     file = service.files().create(
+#         body=file_metadata,
+#         media_body=media,
+#         fields='id, webViewLink',
+#         supportsAllDrives=True
+#     ).execute()
+
+#     return file['id'], file['webViewLink']
 
 app = Flask(__name__)
 app.config['WTF_CSRF_SECRET_KEY'] = os.getenv("WTF_CSRF_SECRET_KEY")
@@ -641,6 +782,7 @@ if __name__ == '__main__':
     with app.app_context():
         load_customers()
     app.run(host='0.0.0.0', port=5500, debug=False)
+
 
 
 
