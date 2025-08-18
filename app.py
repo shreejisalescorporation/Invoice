@@ -20,7 +20,7 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow   
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-
+from google.oauth2.credentials import Credentials
 
 load_dotenv()
 
@@ -30,6 +30,18 @@ load_dotenv()
 SCOPES = ["https://www.googleapis.com/auth/drive.file"]  # least privilege
 INVOICE_FOLDER_ID = os.getenv("INVOICE_FOLDER_ID")
 STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
+
+
+def get_access_token():
+    resp = requests.post("https://oauth2.googleapis.com/token", data={
+        "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+        "client_secret": os.getenv("GOOGLE_CLIENT_SECRET"),
+        "refresh_token": os.getenv("GOOGLE_REFRESH_TOKEN"),
+        "grant_type": "refresh_token"
+    })
+    resp.raise_for_status()
+    return resp.json()["access_token"]
+
 
 def _load_client_info_from_env():
     """
@@ -65,27 +77,11 @@ def _load_creds_from_env():
     return creds
 
 def get_drive_service():
-    # Load creds and client info
-    creds = _load_creds_from_env()
-    client_info = _load_client_info_from_env()
-
-    # Ensure creds has client_id/client_secret (some pickled objects may not)
-    if not getattr(creds, "client_id", None) and client_info.get("client_id"):
-        creds.client_id = client_info.get("client_id")
-    if not getattr(creds, "client_secret", None) and client_info.get("client_secret"):
-        creds.client_secret = client_info.get("client_secret")
-
-    # Refresh if expired and refresh_token exists
-    if creds and creds.expired and getattr(creds, "refresh_token", None):
-        try:
-            creds.refresh(Request())
-        except Exception as e:
-            # fail early with useful message (do not print secrets)
-            raise RuntimeError("Failed to refresh access token. Maybe refresh token revoked or creds mismatched.") from e
-
-    if not creds or not creds.valid:
-        raise RuntimeError("Invalid credentials. Ensure GOOGLE_TOKEN_B64 and GOOGLE_CREDENTIALS_JSON match and token has refresh_token.")
-
+    """
+    Return a Google Drive API service using an access token.
+    """
+    access_token = get_access_token()
+    creds = Credentials(access_token)
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
     return service
 
@@ -796,5 +792,6 @@ if __name__ == "__main__":
 
     # bind to 0.0.0.0 so Render's router can reach the process
     app.run(host="0.0.0.0", port=port, debug=False)
+
 
 
