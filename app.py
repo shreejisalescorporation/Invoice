@@ -778,12 +778,23 @@ def analysis_pdf():
     return redirect(url_for('analytics'))
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
+#     with app.app_context():
+#         load_customers()
+#     app.run(host='0.0.0.0', port=5500, debug=False)
+
+
+
+if __name__ == "__main__":
+
+    # run any startup tasks inside app context
     with app.app_context():
         load_customers()
-    app.run(host='0.0.0.0', port=5500, debug=False)
 
+    # pick up the port Render provides; fall back to 5500 for local dev
+    port = int(os.environ.get("PORT", 5500))
 
-
+    # bind to 0.0.0.0 so Render's router can reach the process
+    app.run(host="0.0.0.0", port=port, debug=False)
 
 
