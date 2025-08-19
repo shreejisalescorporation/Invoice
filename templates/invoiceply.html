@@ -4346,7 +4346,7 @@ table.sheet0 col.col15 {
       <tr class="row1">
         <td class="column0">&nbsp;</td>
         <td class="column1 style106 s style108" colspan="11"> 
-          {% if gst == "RETAIL" %}
+          {% if GSTno == "RETAIL" %}
       RETAIL INVOICE
     {% else %}
       TAX INVOICE
@@ -4464,8 +4464,16 @@ table.sheet0 col.col15 {
       </tr>
       <tr class="row11">
         <td class="column0 style71 null"></td>
-        <td class="column1 style124 null style126" colspan="5">GSTIN:{{GSTno}}</td>
-        <td class="column6 style124 null style126" colspan="4">GSTIN:{{GSTno}}</td>
+        <td class="column1 style124 null style126" colspan="5">  {% if GSTno == "RETAIL" %}
+    RETAIL
+  {% else %}
+    GSTIN: {{ GSTno }}
+  {% endif %}</td>
+        <td class="column6 style124 null style126" colspan="4">  {% if GSTno == "RETAIL" %}
+    RETAIL
+  {% else %}
+    GSTIN: {{ GSTno }}
+  {% endif %}</td>
         <td class="column12">&nbsp;</td>
 
 
@@ -6031,5 +6039,6 @@ table.sheet0 col.col15 {
 
 
 </html>
+
 
 
