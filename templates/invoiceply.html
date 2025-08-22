@@ -1,0 +1,6046 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="generator" content="PhpSpreadsheet, https://github.com/PHPOffice/PhpSpreadsheet">
+  <meta name="author" content="Priyan Bhatt" />
+  <meta name="manager" content="Priyan Bhatt" />
+  <style type="text/css">
+    html {
+      font-family: Calibri, Arial, Helvetica, sans-serif;
+      font-size: 11pt;
+      background-color: white
+    }
+
+    a.comment-indicator:hover+div.comment {
+      background: #ffd;
+      position: absolute;
+      display: block;
+      border: 1px solid black;
+      padding: 0.5em
+    }
+
+    a.comment-indicator {
+      background: red;
+      display: inline-block;
+      border: 1px solid black;
+      width: 0.5em;
+      height: 0.5em
+    }
+
+    div.comment {
+      display: none
+    }
+
+    table {
+      border-collapse: collapse;
+      page-break-after: always
+    }
+
+    .gridlines td {
+      border: 1px dotted black
+    }
+
+    .gridlines th {
+      border: 1px dotted black
+    }
+
+    .b {
+      text-align: center
+    }
+
+    .e {
+      text-align: center
+    }
+
+    .f {
+      text-align: right
+    }
+
+    .inlineStr {
+      text-align: left
+    }
+
+    .n {
+      text-align: right
+    }
+
+    .s {
+      text-align: left
+    }
+
+    td.style0 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: white
+    }
+
+    th.style0 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: white
+    }
+
+    td.style1 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style1 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style2 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style2 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style3 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style3 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style4 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style4 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style5 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style5 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style6 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style6 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style7 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style7 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style8 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style8 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style9 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 9pt;
+      background-color: #FFFFFF
+    }
+
+    th.style9 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 9pt;
+      background-color: #FFFFFF
+    }
+
+    td.style10 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style10 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style11 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style11 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style12 {
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style12 {
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style13 {
+      vertical-align: bottom;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style13 {
+      vertical-align: bottom;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style14 {
+      vertical-align: bottom;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style14 {
+      vertical-align: bottom;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style15 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 9pt;
+      background-color: #FFFFFF
+    }
+
+    th.style15 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 9pt;
+      background-color: #FFFFFF
+    }
+
+    td.style16 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    th.style16 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    td.style17 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    th.style17 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    td.style18 {
+      vertical-align: bottom;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    th.style18 {
+      vertical-align: bottom;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    td.style19 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    th.style19 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    td.style20 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    th.style20 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 8pt;
+      background-color: #FFFFFF
+    }
+
+    td.style21 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style21 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style22 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style22 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style23 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style23 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style24 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style24 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style25 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style25 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style26 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style26 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style27 {
+      vertical-align: bottom;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+/*       font-style: italic; */
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style27 {
+      vertical-align: bottom;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+/*       font-style: italic; */
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style28 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style28 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style29 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style29 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style30 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style30 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style31 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style31 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style32 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style32 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style33 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style33 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style34 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color:#000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style34 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color:#000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style35 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style35 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style36 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style36 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style37 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style37 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style38 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style38 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style39 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style39 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style40 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style40 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style41 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style41 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style42 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style42 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style43 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style43 {
+      vertical-align: bottom;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style44 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style44 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style45 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style45 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style46 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style46 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style47 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style47 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style48 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style48 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style49 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style49 {
+      vertical-align: top;
+      text-align: right;
+      padding-right: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style50 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style50 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style51 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style51 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style52 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #333333;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style52 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      color: #333333;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style53 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style53 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style54 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style54 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style55 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style55 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style56 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style56 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style57 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style57 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style58 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style58 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style59 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style59 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style60 {
+      vertical-align: bottom;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style60 {
+      vertical-align: bottom;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style61 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style61 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style62 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style62 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style63 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style63 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style64 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style64 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style65 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style65 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style66 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style66 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style67 {
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style67 {
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style68 {
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style68 {
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style69 {
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style69 {
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style70 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style70 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style71 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style71 {
+      vertical-align: bottom;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style72 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style72 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style73 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style73 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style74 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style74 {
+      vertical-align: top;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style75 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style75 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style76 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #333333;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style76 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #333333;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style77 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style77 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style78 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style78 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style79 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    th.style79 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 10pt;
+      background-color: #FFFFFF
+    }
+
+    td.style80 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style80 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style81 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style81 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style82 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style82 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style83 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style83 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style84 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style84 {
+      vertical-align: top;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style85 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style85 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style86 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style86 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style87 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style87 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style88 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style88 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style89 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style89 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style90 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style90 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style91 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style91 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style92 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style92 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style93 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style93 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style94 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style94 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style95 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style95 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style96 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style96 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style97 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style97 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style98 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style98 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style99 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style99 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style100 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style100 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style101 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style101 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style102 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    th.style102 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      font-style: italic;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 16pt;
+      background-color: #FFFFFF
+    }
+
+    td.style103 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style103 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style104 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style104 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style105 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style105 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style106 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 14pt;
+      background-color: #FFFFFF
+    }
+
+    th.style106 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 14pt;
+      background-color: #FFFFFF
+    }
+
+    td.style107 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 14pt;
+      background-color: #FFFFFF
+    }
+
+    th.style107 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 14pt;
+      background-color: #FFFFFF
+    }
+
+    td.style108 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 14pt;
+      background-color: #FFFFFF
+    }
+
+    th.style108 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 14pt;
+      background-color: #FFFFFF
+    }
+
+    td.style109 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 24pt;
+      background-color: #FFFFFF
+    }
+
+    th.style109 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 24pt;
+      background-color: #FFFFFF
+    }
+
+    td.style110 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 24pt;
+      background-color: #FFFFFF
+    }
+
+    th.style110 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 24pt;
+      background-color: #FFFFFF
+    }
+
+    td.style111 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 24pt;
+      background-color: #FFFFFF
+    }
+
+    th.style111 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 24pt;
+      background-color: #FFFFFF
+    }
+
+    td.style112 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style112 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style113 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style113 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style114 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style114 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style115 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style115 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style116 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style116 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style117 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    th.style117 {
+      vertical-align: bottom;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 11pt;
+      background-color: #FFFFFF
+    }
+
+    td.style118 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style118 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style119 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style119 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style120 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style120 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style121 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style121 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style122 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style122 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style123 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style123 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style124 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style124 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style125 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style125 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style126 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style126 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: 2px solid #000000 !important;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style127 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style127 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style128 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style128 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: none #000000;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style129 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style129 {
+      vertical-align: top;
+      text-align: left;
+      padding-left: 0px;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: none #000000;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style130 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style130 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style131 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style131 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style132 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style132 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: none #000000;
+      border-top: 2px solid #000000 !important;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    td.style133 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    th.style133 {
+      vertical-align: middle;
+      text-align: center;
+      border-bottom: 2px solid #000000 !important;
+      border-top: none #000000;
+      border-left: 2px solid #000000 !important;
+      border-right: 2px solid #000000 !important;
+      font-weight: bold;
+      color: #000000;
+      font-family: 'Arial';
+      font-size: 12pt;
+      background-color: #FFFFFF
+    }
+
+    /* table.sheet0 col.col0 {
+      width: 50.83333275pt
+    }
+
+    table.sheet0 col.col1 {
+      width: 35.24444404pt
+    }
+
+    table.sheet0 col.col2 {
+      width: 198.58888661pt
+    }
+
+    table.sheet0 col.col3 {
+      width: 29.82222188pt
+    }
+
+    table.sheet0 col.col4 {
+      width: 8.13333324pt
+    }
+
+    table.sheet0 col.col5 {
+      width: 29.82222188pt
+    }
+
+    table.sheet0 col.col6 {
+      width: 60.9999993pt
+    }
+
+    table.sheet0 col.col7 {
+      width: 60.32222153pt
+    }
+
+    table.sheet0 col.col8 {
+      width: 102.34444327pt
+    }
+
+    table.sheet0 col.col9 {
+      width: 60.32222153pt
+    }
+
+    table.sheet0 col.col10 {
+      width: 107.76666543pt
+    }
+
+    table.sheet0 col.col11 {
+      width: 98.27777665pt
+    }
+
+    table.sheet0 col.col12 {
+      width: 44.05555505pt
+    }
+
+    table.sheet0 col.col13 {
+      width: 44.05555505pt
+    }
+
+    table.sheet0 col.col14 {
+      width: 39.98888843pt
+    }
+
+    table.sheet0 col.col15 {
+      width: 44.05555505pt
+    } */
+table.sheet0 col.col0 {
+  width: 0pt;
+}
+
+table.sheet0 col.col1 {
+  width: 52.87pt;
+}
+
+table.sheet0 col.col2 {
+  width: 297.88pt;
+}
+
+table.sheet0 col.col3 {
+  width: 44.73pt;
+}
+
+table.sheet0 col.col4 {
+  width: 12.2pt;
+}
+
+table.sheet0 col.col5 {
+  width: 44.73pt;
+}
+
+table.sheet0 col.col6 {
+  width: 91.5pt;
+}
+
+table.sheet0 col.col7 {
+  width: 90.48pt;
+}
+
+table.sheet0 col.col8 {
+  width: 153.52pt;
+}
+
+table.sheet0 col.col9 {
+  width: 90.48pt;
+}
+
+table.sheet0 col.col10 {
+  width: 150.65pt;
+}
+
+table.sheet0 col.col11 {
+  width: 00pt;
+}
+
+table.sheet0 col.col12 {
+  width: 0pt;
+}
+
+table.sheet0 col.col13 {
+  width: 0pt;
+}
+
+table.sheet0 col.col14 {
+  width: 0pt;
+}
+
+table.sheet0 col.col15 {
+  width: 0pt;
+}
+
+    table.sheet0 tr {
+      height: 12.75pt
+    }
+
+    table.sheet0 tr.row0 {
+      height: 13.8pt
+    }
+
+    table.sheet0 tr.row1 {
+      height: 18pt
+    }
+
+    table.sheet0 tr.row2 {
+      height: 30pt
+    }
+
+    table.sheet0 tr.row3 {
+      height: 13.8pt
+    }
+
+    table.sheet0 tr.row4 {
+      height: 13.8pt
+    }
+
+    table.sheet0 tr.row5 {
+      height: 13.8pt
+    }
+
+    table.sheet0 tr.row6 {
+      height: 9.6pt
+    }
+
+    table.sheet0 tr.row7 {
+      height: 19.2pt
+    }
+
+    table.sheet0 tr.row8 {
+      height: 0.6pt
+    }
+    .fixed-address {
+  max-height: 62.4pt;
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+    table.sheet0 tr.row9 {
+      height: 0.6pt;
+      display: none;
+      visibility: hidden
+    }
+
+    table.sheet0 tr.row10 {
+      height: 62.4pt
+    }
+
+    table.sheet0 tr.row11 {
+      height: 16.2pt
+    }
+
+    table.sheet0 tr.row12 {
+      height: 28.5pt
+    }
+
+    table.sheet0 tr.row13 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row14 {
+      height: 30pt
+    }
+
+    table.sheet0 tr.row15 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row16 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row17 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row18 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row19 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row20 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row21 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row22 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row23 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row24 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row25 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row26 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row27 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row28 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row29 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row30 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row31 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row32 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row33 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row34 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row35 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row36 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row37 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row38 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row39 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row40 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row41 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row42 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row43 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row44 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row45 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row46 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row47 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row48 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row49 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row50 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row51 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row52 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row53 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row54 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row55 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row56 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row57 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row58 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row59 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row60 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row61 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row62 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row63 {
+      height: 71.4pt
+    }
+
+    table.sheet0 tr.row64 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row65 {
+      height: 26.4pt
+    }
+
+    table.sheet0 tr.row66 {
+      height: 17.25pt
+    }
+
+    table.sheet0 tr.row67 {
+      height: 31.8pt
+    }
+
+    table.sheet0 tr.row68 {
+      height: 17.25pt
+    }
+
+    table.sheet0 tr.row69 {
+      height: 17.25pt
+    }
+
+    table.sheet0 tr.row70 {
+      height: 17.25pt
+    }
+
+    table.sheet0 tr.row71 {
+      height: 17.25pt
+    }
+
+    table.sheet0 tr.row72 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row73 {
+      height: 46.95pt
+    }
+
+    table.sheet0 tr.row74 {
+      height: 15.6pt
+    }
+
+    table.sheet0 tr.row75 {
+      height: 34.8pt
+    }
+
+    table.sheet0 tr.row76 {
+      height: 25.8pt
+    }
+
+    table.sheet0 tr.row77 {
+      height: 15pt
+    }
+
+    table.sheet0 tr.row78 {
+      height: 13.8pt
+    }
+
+    table.sheet0 tr.row79 {
+      height: 15.6pt
+    }
+
+
+
+
+
+
+
+
+
+    /* Force A4 page and clamp overflow to one sheet */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+
+      height: 300mm;
+      /* A4 height */
+      box-sizing: border-box;
+      /* prevent any spill onto a second page */
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+
+      .container {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      button,
+      a {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <style>
+    @page {
+      margin-left: 0in;
+      margin-right: 0in;
+      margin-top: 0in;
+      margin-bottom: 0.06in;
+    }
+
+    body {
+      margin-left: 0.05in;
+      margin-right: 0in;
+      margin-top: 0in;
+      margin-bottom: 0.06in;
+    }
+  </style>
+  <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0">
+    <col class="col0">
+    <col class="col1">
+    <col class="col2">
+    <col class="col3">
+    <col class="col4">
+    <col class="col5">
+    <col class="col6">
+    <col class="col7">
+    <col class="col8">
+    <col class="col9">
+    <col class="col10">
+    <col class="col11" style="width: 150px;">
+    <col class="col12">
+    <col class="col13">
+    <col class="col14">
+    <col class="col15">
+    <tbody>
+
+      <tr class="row1">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style106 s style108" colspan="11"> 
+          {% if GSTno.startswith("RETAIL") %}
+      RETAIL INVOICE
+    {% else %}
+      TAX INVOICE
+    {% endif %}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row2">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style109 s style111" colspan="11">SHREEJI SALES CORPORATION</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row3">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style112 s style114" colspan="11">Address:9/B/1 Manav Purusharth soc.opp. Hirabhai
+          Tower,Maninagar,Ahmedabad</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row4">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style112 null style114" colspan="11"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row5">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style115 s style117" colspan="11">GSTIN No:24AFJPB3338N1ZF</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row6">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style2 null"></td>
+        <td class="column2">&nbsp;</td>
+        <td class="column3">&nbsp;</td>
+        <td class="column4">&nbsp;</td>
+        <td class="column5">&nbsp;</td>
+        <td class="column6">&nbsp;</td>
+         <td class="column7">&nbsp;</td>
+        <td class="column8">&nbsp;</td>
+        <td class="column9">&nbsp;</td>
+        <td class="column10">&nbsp;</td>
+        <td class="column11 style5 null"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row7">
+        <td class="column0 style71 null"></td>
+        <td class="column1 style121 null style123" colspan="5">Bill To:{{customer_name}}</td>
+        <td class="column6 style121 null style123" colspan="4">Ship To:{{customer_name}}</td>
+        <td class="column10 style118 s style120" rowspan="2">Invoice number</td>
+        <td class="column11 style103 s style105" rowspan="2">Date</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row8">
+        <td class="column0 style71 null"></td>
+        <td class="column1 style72 null style123 fixed-address" colspan="5" rowspan="2">Address:{{Address}}</td>
+        <td class="column2 style73 null style123 fixed-address"colspan="4" rowspan="2">Address:{{Address}}</td>
+        <td class="column3 style73 null"></td>
+        <td class="column4 style73 null"></td>
+        <td class="column5 null"></td>
+        <td class="column6  null" ></td>
+        <td class="column8  null"></td>
+        <td class="column7  null"></td>
+        <td class="column9  null"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row9">
+        <td class="column0 style71 null"></td>
+        <td class="column1 style72 null"></td>
+        <td class="column2 style73 null"></td>
+        <td class="column3 style73 null"></td>
+        <td class="column4 style73 null"></td>
+        <td class="column5 style74 null"></td>
+        <td class="column6 style72 null"></td>
+        <td class="column7 style73 null"></td>
+        <td class="column8 style73 null"></td>
+        <td class="column9 style74 null"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row10">
+        <td class="column0 style71 null"></td>
+        <td class="column1 style132 style127 null style129" rowspan="2">{{invoice_no}}</td>
+        <td class="column2 style132 style74 null" rowspan="2">{{date}}</td>
+        <td class="column6 " ></td>
+        <td class="column10 " ></td>
+        <td class="column11 " > </td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row11">
+        <td class="column0 style71 null"></td>
+        <td class="column1 style124 null style126" colspan="5">  {% if GSTno.startswith("RETAIL") %}
+    RETAIL
+  {% else %}
+    GSTIN: {{ GSTno }}
+  {% endif %}</td>
+        <td class="column6 style124 null style126" colspan="4">  {% if GSTno.startswith("RETAIL") %}
+    RETAIL
+  {% else %}
+    GSTIN: {{ GSTno }}
+  {% endif %}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row12">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style66 s">Sr.No</td>
+        <td class="column2 style65 s">Description of goods</td>
+        <td class="column3 style84 s style84" colspan="3">Dimensions <span
+            style="color:#000000; font-family:'Arial'; font-size:9pt"><br>meter X meter</span></td>
+        <td class="column6 style64 s">HSN CODE</td>
+        <td class="column7 style22 s">Alt.QTY <span style="color:#000000; font-family:'Arial'; font-size:10pt">number of
+            piece</span></td>
+        <td class="column8 style63 s">QTY</td>
+        <td class="column9 style63 s">Unit</td>
+        <td class="column10 style61 s">RATE<span style="color:#000000; font-family:'Arial'; font-size:10pt"><br>per
+            Unit</span></td>
+        <td class="column11 style61 s">Amount<span style="color:#000000; font-family:'Arial'; font-size:10pt"></span>
+        </td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row13">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style23 null"></td>
+        <td class="column2 style24 null"></td>
+        <td class="column3 style25 null"></td>
+        <td class="column4 style26 null"></td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style56 null"></td>
+        <td class="column7 style23 null"></td>
+        <td class="column8 style28 null"></td>
+        <td class="column9 style29 null"></td>
+        <td class="column10 style23 null"></td>
+        <td class="column11 style23 null"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+
+      <tr class="row14">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style60 null"></td>
+        <td class="column5 style75 null"></td>
+        <td class="column6 style76 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      {% set ns = namespace(last_idx=0) %}
+      {% for item in items %}
+      {% set current_idx = loop.index %}
+      {% set ns.last_idx = current_idx %}
+
+      <tr class="row15">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null">{{loop.index}}</td>
+        <td class="column2 style31 null">{{item.desc}}</td>
+        <td class="column3 style32 null">{{item.l}}</td>
+        <td class="column4 style33 null">&nbsp;X&nbsp;</td>
+        <td class="column5 style27 null">{{item.b}}</td>
+        <td class="column6 style58 null">{{item.hsn}}</td>
+        <td class="column7 style34 null">{{item.qty}}</td>
+        <td class="column8 style31 f">{{item.area}}</td>
+        <td class="column9 style31 null">sq.mtr</td>
+        <td class="column10 style30 null">{{item.pr}}</td>
+        <td class="column11 style30 f">{{item.amt}}</td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% if not loop.last %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+      {% if ns.last_idx == 1 %}
+      {% for i in range(0, 41) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 2 %}
+      {% for i in range(0, 39) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 3 %}
+      {% for i in range(0, 37) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 4 %}
+      {% for i in range(0, 35) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 5 %}
+      {% for i in range(0, 33) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 6 %}
+      {% for i in range(0, 30) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 7 %}
+      {% for i in range(0, 28) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 8 %}
+      {% for i in range(0, 26) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 9 %}
+      {% for i in range(0, 24) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 10 %}
+      {% for i in range(0, 22) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 11 %}
+      {% for i in range(0, 20) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 12 %}
+      {% for i in range(0, 18) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 13 %}
+      {% for i in range(0, 16) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 14 %}
+      {% for i in range(0, 14) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 15 %}
+      {% for i in range(0, 12) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 16 %}
+      {% for i in range(0, 11) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 17 %}
+      {% for i in range(0, 9) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 18 %}
+      {% for i in range(0, 7) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 19 %}
+      {% for i in range(0, 5) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 20 %}
+      {% for i in range(0, 3) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 21 %}
+      {% for i in range(0, 2) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 22 %}
+      {% for i in range(0, 0) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% if ns.last_idx == 23 %}
+      {% for i in range(0, 1) %}
+      <tr class="spacer-row">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style30 null"></td>
+        <td class="column2 style31 null"></td>
+        <td class="column3 style32 null"></td>
+        <td class="column4 style33 null">&nbsp;&nbsp;</td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style58 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style31 null"></td>
+        <td class="column10 style30 null"></td>
+        <td class="column11 style30 f"></td>
+        <td class="column12">&nbsp;</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      <!-- <tr class="row16">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style35 null"></td>
+            <td class="column4 style36 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style58 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row17">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row18">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row19">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 null"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row20">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row21">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row22">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row23">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row24">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row25">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row26">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row27">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row28">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style37 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style39 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row29">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row30">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style37 null"></td>
+            <td class="column3 style38 null"></td>
+            <td class="column4 style39 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row31">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row32">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row33">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row34">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row35">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row36">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row37">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row38">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row39">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row40">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row41">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row42">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row43">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row44">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row45">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row46">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row47">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row48">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row49">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row50">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row51">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row52">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+           </tr>
+           <tr class="row53">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+           
+          </tr>
+          <tr class="row54">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style30 null"></td>
+            <td class="column2 style31 null"></td>
+            <td class="column3 style32 null"></td>
+            <td class="column4 style33 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style57 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style31 null"></td>
+            <td class="column10 style30 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr> 
+         
+          <tr class="row56">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style40 null"></td>
+            <td class="column2 style41 null"></td>
+            <td class="column3 style42 null"></td>
+            <td class="column4 style43 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style21 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style41 null"></td>
+            <td class="column10 style40 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr> 
+          <tr class="row57">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style40 null"></td>
+            <td class="column2 style41 null"></td>
+            <td class="column3 style42 null"></td>
+            <td class="column4 style43 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style21 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style41 null"></td>
+            <td class="column10 style40 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr> 
+        </tr> 
+        <tr class="row58">
+          <td class="column0 style3 null"></td>
+          <td class="column1 style40 null"></td>
+          <td class="column2 style41 null"></td>
+          <td class="column3 style42 null"></td>
+          <td class="column4 style43 null"></td>
+          <td class="column5 style27 null"></td>
+          <td class="column6 style21 null"></td>
+          <td class="column7 style34 null"></td>
+          <td class="column8 style31 f"></td>
+          <td class="column9 style41 null"></td>
+          <td class="column10 style40 null"></td>
+          <td class="column11 style30 f"></td>
+          <td class="column12">&nbsp;</td>
+           
+           
+           
+        </tr> 
+        <tr class="row59">
+          <td class="column0 style3 null"></td>
+          <td class="column1 style40 null"></td>
+          <td class="column2 style41 null"></td>
+          <td class="column3 style42 null"></td>
+          <td class="column4 style43 null"></td>
+          <td class="column5 style27 null"></td>
+          <td class="column6 style21 null"></td>
+          <td class="column7 style34 null"></td>
+          <td class="column8 style31 f"></td>
+          <td class="column9 style41 null"></td>
+          <td class="column10 style40 null"></td>
+          <td class="column11 style30 f"></td>
+          <td class="column12">&nbsp;</td>
+           
+           
+           
+        </tr> 
+             
+             
+          
+           <tr class="row64">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style44 null"></td>
+            <td class="column2 style45 null"></td>
+            <td class="column3 style25 null"></td>
+            <td class="column4 style26 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style59 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style45 null"></td>
+            <td class="column10 style44 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>
+          <tr class="row65">
+            <td class="column0 style3 null"></td>
+            <td class="column1 style44 null"></td>
+            <td class="column2 style45 null"></td>
+            <td class="column3 style25 null"></td>
+            <td class="column4 style26 null"></td>
+            <td class="column5 style27 null"></td>
+            <td class="column6 style59 null"></td>
+            <td class="column7 style34 null"></td>
+            <td class="column8 style31 f"></td>
+            <td class="column9 style45 null"></td>
+            <td class="column10 style44 null"></td>
+            <td class="column11 style30 f"></td>
+            <td class="column12">&nbsp;</td>
+             
+             
+             
+          </tr>  -->
+      <tr class="row66">
+        <td class="column0 style3 null"></td>
+        <td class="column1 style44 null"></td>
+        <td class="column2 style45 null"></td>
+        <td class="column3 style25 null"></td>
+        <td class="column4 style26 null"></td>
+        <td class="column5 style27 null"></td>
+        <td class="column6 style59 null"></td>
+        <td class="column7 style34 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style45 null"></td>
+        <td class="column10 style67 s">SUB TOTAL</td>
+        <td class="column11 style70 f">{{subtotal}}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row67">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style46 null"></td>
+        <td class="column2 style47 null"></td>
+        <td class="column3 style48 null"></td>
+        <td class="column4 style49 null"></td>
+        <td class="column5 style50 null"></td>
+        <td class="column6 style51 null"></td>
+        <td class="column7 style52 null"></td>
+        <td class="column8 style31 f"></td>
+        <td class="column9 style47 null"></td>
+        <td class="column10 style67 s">Carting &amp; Handling Charges </td>
+        <td class="column11 style62 null">{{chcharge}}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row68">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style85 s style93" colspan="5" rowspan="6">Terms &amp; Conditions: <br />
+          1) Bill will be in square metres only<br />
+          <br />
+          2) Subject to Ahmedabad Jurisdiction<br />
+          <br />
+          3) Our risk and responsibility ceases on delivery of goods<br />
+          <br />
+          4) Goods once sold will not be returned or exchanged
+        </td>
+        <td class="column6 style94 s style102" colspan="4" rowspan="6">Bank details:<br>
+          Bank:<span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:16pt">Indian Bank
+            <br></span>
+          <span style="font-weight:bold; font-style:italic; color:#000000; font-family:'Arial'; font-size:16pt">
+            Branch:</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:16pt">Maninagar
+            <br></span>
+          <span style="font-weight:bold; font-style:italic; color:#000000; font-family:'Arial'; font-size:16pt">
+            Account number:</span><span
+            style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:16pt">7448943311 <br></span><span
+            style="font-weight:bold; font-style:italic; color:#000000; font-family:'Arial'; font-size:16pt"> IFSC
+            code:</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:16pt">IDIB000M615
+          </span><span style="font-weight:bold; font-style:italic; color:#000000; font-family:'Arial'; font-size:16pt">
+          </span>
+        </td>
+        <td class="column10 style68 s">Total Taxable Value</td>
+        <td class="column11 style62 f">{{taxable_value}}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row69">
+        <td class="column0">&nbsp;</td>
+        <td class="column10 style69 s">CGST-9%</td>
+        <td class="column11 style53 f">{{tax}}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row70">
+        <td class="column0">&nbsp;</td>
+        <td class="column10 style69 s">SGST-9%</td>
+        <td class="column11 style54 f">{{tax}}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row71">
+        <td class="column0">&nbsp;</td>
+        <td class="column10 style69 s">GRAND TOTAL</td>
+        <td class="column11 style54 f">{{grandtotal}}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row72">
+        <td class="column0">&nbsp;</td>
+        <td class="column10 style80 s style81" colspan="2">GRAND TOTAL IN WORDS</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row73">
+        <td class="column0">&nbsp;</td>
+        <td class="column10 style82 null style83" colspan="2">{{grandtotal_words}}</td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row74">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style121 s style122" colspan="2">For,SHREEJI SALES CORPORATION</td>
+        <td class="column3 style55 null"></td>
+        <td class="column4 style10 null"></td>
+        <td class="column5 style10 null"></td>
+        <td class="column6 style8 null"></td>
+        <td class="column7 style8 null"></td>
+        <td class="column8 style9 null"></td>
+        <td class="column9 style8 null"></td>
+        <td class="column10 style10 null"></td>
+        <td class="column11 style7 null"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row75">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style2 null"></td>
+        <td class="column2">&nbsp;</td>
+        <td class="column3">&nbsp;</td>
+        <td class="column4">&nbsp;</td>
+        <td class="column5">&nbsp;</td>
+        <td class="column6">&nbsp;</td>
+        <td class="column7">&nbsp;</td>
+        <td class="column8">&nbsp;</td>
+        <td class="column9">&nbsp;</td>
+        <td class="column10 style6 null"></td>
+        <td class="column11 style11 null"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row76">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style2 null"></td>
+        <td class="column2">&nbsp;</td>
+        <td class="column3">&nbsp;</td>
+        <td class="column4">&nbsp;</td>
+        <td class="column5">&nbsp;</td>
+        <td class="column6">&nbsp;</td>
+         <td class="column7">&nbsp;</td>
+        <td class="column8">&nbsp;</td>
+        <td class="column9">&nbsp;</td>
+        <td class="column10 style6 null"></td>
+        <td class="column11 style11 null"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row77">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style2 null"></td>
+        <td class="column2">&nbsp;</td>
+        <td class="column3">&nbsp;</td>
+        <td class="column4">&nbsp;</td>
+        <td class="column5">&nbsp;</td>
+        <td class="column6">&nbsp;</td>
+         <td class="column7">&nbsp;</td>
+        <td class="column8 style15 null"></td>
+        <td class="column9">&nbsp;</td>
+        <td class="column10 style21 null"></td>
+        <td class="column11 style5 null"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row78">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style77 null style79" colspan="11"></td>
+        <td class="column12">&nbsp;</td>
+
+
+
+      </tr>
+      <tr class="row79">
+        <td class="column0">&nbsp;</td>
+        <td class="column1 style13 s " colspan="2">Authorised Signature</td>
+        <!-- <td class="column2 style14 null"></td> -->
+        <td class="column3 style14 null"></td>
+        <td class="column4 style14 null"></td>
+        <td class="column5 style14 null"></td>
+        <td class="column6 style12 null"></td>
+        <td class="column7 style12 null"></td>
+        <td class="column8 style18 null"></td>
+        <td class="column9 style18 null"></td>
+        <td class="column10 style19 null"></td>
+        <td class="column11 style20 null"></td>
+        <td class="column12">&nbsp;</td>
+
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+
+
+</html>
+
+
+
+
+
