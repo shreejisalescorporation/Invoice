@@ -421,6 +421,7 @@ def invoice_form():
 @app.route("/analysis", methods=["GET", "POST"])
 @login_required
 def analytics():
+    load_customers()
     return render_template("analytics.html", customers=customer_cache)
 
 
@@ -649,7 +650,7 @@ def add_customer():
     if current_user.id not in allowed_users:  # Adjust according to your user model
         return "Unauthorized", 403  # Or redirect to a custom error page
     name = request.form["name"]
-    gst = request.form["gst"]
+    gst = request.form["gst"].upper()
     add = request.form["Address"]
 
     supabase = connection()  # returns a Supabase Client
@@ -703,22 +704,35 @@ def analysis_pdf():
     if not row:
         flash("No invoices found for those filters.", "warning")
         return redirect(url_for("analytics"))
+    
+    # Convert dictionaries to tuples in the order expected by the template
+    formatted_results = []
     for inv in row:
-        # Move nested customer.name up
-        inv["customer_name"] = inv.get("customer", {}).get("name", "")
-        # Remove the nested dict
-        inv.pop("customer", None)
+        customer_name = inv.get("customer", {}).get("name", "") if isinstance(inv.get("customer"), dict) else ""
+        formatted_row = (
+            inv.get("invoice_no"),
+            inv.get("gst"),
+            customer_name,
+            inv.get("date"),
+            inv.get("total_taxable_value"),
+            inv.get("cgst"),
+            inv.get("sgst"),
+            inv.get("grand_total"),
+            inv.get("hsn")
+        )
+        formatted_results.append(formatted_row)
+    
     # 3) Compute sums in Python
-    total_cgst = sum(item["cgst"] for item in row)
-    total_sgst = sum(item["sgst"] for item in row)
-    total_tax = sum(item["cgst"] + item["sgst"] for item in row)
-    total_taxable = sum(item["total_taxable_value"] for item in row)
-    total_grand = sum(item["grand_total"] for item in row)
+    total_cgst = sum(item[5] for item in formatted_results)
+    total_sgst = sum(item[6] for item in formatted_results)
+    total_tax = sum(item[5] + item[6] for item in formatted_results)
+    total_taxable = sum(item[4] for item in formatted_results)
+    total_grand = sum(item[7] for item in formatted_results)
     sums = (total_cgst, total_sgst, total_tax, total_taxable, total_grand)
 
     # Render the same template into HTML string
     rendered_html = render_template("analysis_result.html",
-                                    results=row,
+                                    results=formatted_results,
                                     sums=sums)
 
     # Convert to PDF
@@ -745,11 +759,16 @@ def analysis_pdf():
         date_str = now.strftime("%d %B %Y").lstrip("0")
         name = f"{customer_name}-{date_str}"
     else:
-        date_from_ = datetime.strptime(datefrom, '%Y-%m-%d')
-        date_from = date_from_.strftime('%d %B %Y')
-        date_to_ = datetime.strptime(dateto, '%Y-%m-%d')
-        date_to = date_to_.strftime('%d %B %Y')
-        name = f"{date_from}-{date_to}"
+        if datefrom and dateto:
+            date_from_ = datetime.strptime(datefrom, '%Y-%m-%d')
+            date_from = date_from_.strftime('%d %B %Y')
+            date_to_ = datetime.strptime(dateto, '%Y-%m-%d')
+            date_to = date_to_.strftime('%d %B %Y')
+            name = f"{date_from}-{date_to}"
+        else:
+            now = datetime.now()
+            date_str = now.strftime("%d %B %Y").lstrip("0")
+            name = f"Statement-{date_str}"
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
         tmp.write(pdf)
         tmp.flush()

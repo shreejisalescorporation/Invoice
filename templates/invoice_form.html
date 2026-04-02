@@ -8,15 +8,21 @@
   <link rel="stylesheet" href="/static/style.css">
   <style>
     .large-select {
-      width: 375px;
+      width: 100%;
+      max-width: 375px;
       height: 40px;
       font-size: 16px;
+      box-sizing: border-box;
+      padding: 4px 8px;
     }
 
     input.large-select {
-      width: 375px;
+      width: 100%;
+      max-width: 375px;
       height: 40px;
       font-size: 16px;
+      box-sizing: border-box;
+      padding: 4px 8px;
     }
 
     .remove-btn {
@@ -72,6 +78,14 @@
         margin: 8px 0 0 auto;
       }
 
+      nav ul {
+        gap: 15px !important;
+        flex-wrap: wrap;
+      }
+
+      nav li {
+        flex: 0 1 auto;
+      }
     }
 
 
@@ -123,8 +137,7 @@
         <input type="number" id="invoice_no" name="invoice_no" required> -->
 
         <label for="date">Date</label>
-        <input type="date" id="date" name="date" class="large-select"
-          style="width: 375px; height: 40px; font-size: 16px; padding: 4px 8px; box-sizing: border-box;" required>
+        <input type="date" id="date" name="date" class="large-select" required>
         <label for="customer_name">Select Customer:</label>
         <select name="customer_name" id="customer_name" class="large-select">
           <option value="" disabled selected>Select Customer</option>
@@ -184,8 +197,7 @@
         <input type="number" id="invoice_nometal" name="invoice_nometal" required> -->
 
         <label for="datemetal">Date</label>
-        <input type="date" id="datemetal" name="datemetal" class="large-select"
-          style="width: 375px; height: 40px; font-size: 16px; padding: 4px 8px; box-sizing: border-box;" required>
+        <input type="date" id="datemetal" name="datemetal" class="large-select" required>
 
         <label for="customer_namemetal">Select Customer:</label>
         <select name="customer_namemetal" id="customer_namemetal" class="large-select">

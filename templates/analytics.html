@@ -14,9 +14,12 @@
         }
 
         .large-select {
-            width: 375px;
+            width: 100%;
+            max-width: 375px;
             height: 40px;
             font-size: 16px;
+            box-sizing: border-box;
+            padding: 4px 8px;
         }
 
         .remove-btn {
@@ -72,6 +75,14 @@
                 margin: 8px 0 0 auto;
             }
 
+            nav ul {
+                gap: 15px !important;
+                flex-wrap: wrap;
+            }
+
+            nav li {
+                flex: 0 1 auto;
+            }
         }
 
 
@@ -163,12 +174,10 @@
                 <!-- Date Filter -->
                 <div id="date-filters" style="margin-bottom: 10px; display: none;">
                     <label for="datefrom">From:</label><br>
-                    <input type="date" id="datefrom" name="datefrom" class="large-select"
-                        style="width: 375px; height: 40px; font-size: 16px; padding: 4px 8px; box-sizing: border-box;">
+                    <input type="date" id="datefrom" name="datefrom" class="large-select">
                     <br>
                     <label for="dateto">To:</label><br>
-                    <input type="date" id="dateto" name="dateto"
-                        style="width: 375px; height: 40px; font-size: 16px; padding: 4px 8px; box-sizing: border-box;">
+                    <input type="date" id="dateto" name="dateto" class="large-select">
                 </div>
 
                 <!-- Customer Filter -->

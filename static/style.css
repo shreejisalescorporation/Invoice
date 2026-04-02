@@ -55,7 +55,8 @@ body {
   input[type="text"],
   input[type="date"],
   input[type="number"],
-  textarea {
+  textarea,
+  select {
     padding: 8px 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -86,6 +87,7 @@ body {
     margin-top: 20px;
     overflow-x: auto;
     display: block;
+    max-width: 100%;
   }
   
   table th,
@@ -115,7 +117,8 @@ body {
     input[type="text"],
     input[type="date"],
     input[type="number"],
-    textarea {
+    textarea,
+    select {
       font-size: 0.9rem;
     }
     button {
@@ -124,6 +127,11 @@ body {
     }
     table {
       font-size: 0.9rem;
+      overflow-x: auto;
+    }
+    table th,
+    table td {
+      padding: 6px 4px;
     }
   }
   
