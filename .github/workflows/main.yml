@@ -3,30 +3,35 @@ name: Ping Supabase Every 6 Days
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 21 * * *"   
+    - cron: "30 21 */6 * *"
 jobs:
   ping:
     runs-on: ubuntu-latest
     env:
-      SUPABASE_ENDPOINT: "https://iqiytljbybypssagzmoy.supabase.co/rest/v1/customer?select=gst&limit=1"
+      SUPABASE_ENDPOINT: "https://iqiytljbybypssagzmoy.supabase.co/rest/v1/customer?select=customer_id&limit=1"
       SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
     steps:
-      - name: Debug
-        shell: bash
-        run: |
-          echo "Key length: ${#SUPABASE_API_KEY}"
-
       - name: Ping Supabase
         shell: bash
         run: |
-          echo "Pinging Supabase endpoint: $SUPABASE_ENDPOINT"
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+          response_file="$RUNNER_TEMP/supabase-response.json"
+          echo "Pinging Supabase customer endpoint"
+          STATUS=$(curl --silent --show-error \
+            --connect-timeout 10 \
+            --max-time 30 \
+            --retry 3 \
+            --output "$response_file" \
+            --write-out "%{http_code}" \
             -H "apikey: $SUPABASE_API_KEY" \
             -H "Authorization: Bearer $SUPABASE_API_KEY" \
-            "$SUPABASE_ENDPOINT")
+            "$SUPABASE_ENDPOINT") || {
+              echo "Supabase request failed before receiving an HTTP status"
+              exit 1
+            }
           echo "Status code: $STATUS"
-          if [ "$STATUS" -ne 200 ]; then
-            echo "Ping failed"
+          if [ "$STATUS" != "200" ]; then
+            echo "Ping failed. Supabase response body:"
+            cat "$response_file"
             exit 1
           fi
           echo "Ping successful"
