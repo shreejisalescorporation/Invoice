@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.vscode/
+*.py[cod]
+*.csv
+token.pickle
+*service-account*.json
+*credentials*.json
+invoice-462518-8399dc75ca3f.json

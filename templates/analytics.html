@@ -110,7 +110,10 @@
       <a href="{{ url_for('analytics') }}" style="color: white; text-decoration: none; font-weight: bold;">Analytics</a>
     </li>
     <li>
-      <a href="{{ url_for('logout') }}" style="color: white; text-decoration: none; font-weight: bold;">Logout</a>
+      <form method="post" action="{{ url_for('logout') }}" style="display: inline;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" style="min-height: 0; padding: 5px 2px; border: 0; background: transparent; color: white;">Logout</button>
+      </form>
     </li>
   </ul>
 </nav>
@@ -136,10 +139,29 @@
                 <input type="hidden" name="formSelector" value="Add">
                 <label for="name">Customer Name</label>
                 <input type="text" id="name" name="name" required>
-                <label for="Address">Address</label>
-                <input type="text" id="Address" name="Address" required>
-                <label for="gst">GST No.</label>
-                <input type="text" id="gst" name="gst" required>
+                <label for="customer_type">Customer Type</label>
+                <select id="customer_type" name="customer_type" required onchange="updateGstRequirement()">
+                    <option value="business">GST-registered customer</option>
+                    <option value="retail">Retail customer (no GST number)</option>
+                </select>
+                <label for="address_line_1">Address line 1</label>
+                <input type="text" id="address_line_1" name="address_line_1" autocomplete="address-line1" required>
+                <label for="address_line_2">Address line 2</label>
+                <input type="text" id="address_line_2" name="address_line_2" autocomplete="address-line2">
+                <label for="area_landmark">Area / Landmark</label>
+                <input type="text" id="area_landmark" name="area_landmark">
+                <label for="city_village_district">City / Village / District</label>
+                <input type="text" id="city_village_district" name="city_village_district" autocomplete="address-level2" required>
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" autocomplete="address-level1" required>
+                <label for="pincode">Pincode</label>
+                <input type="text" id="pincode" name="pincode" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{6}" maxlength="6" required>
+                <label for="mobile">Mobile number</label>
+                <input type="tel" id="mobile" name="mobile" autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email">
+                <label for="gst_number">GSTIN <span id="gst-help">(required for GST-registered customers)</span></label>
+                <input type="text" id="gst_number" name="gst_number" maxlength="15" autocomplete="off">
                 <button type="submit" formaction="/add">Add Customer to Database</button><br>
             </form>
         </div>
@@ -167,7 +189,7 @@
                 <select id="filterSelector" class="large-select" onchange="handleFilterChange()">
                     <option value="">-- Select --</option>
                     <option value="date">Date Range</option>
-                    <option value="customer">Customer GST & Name</option>
+                    <option value="customer">Customer</option>
                     <option value="both">Both</option>
                 </select><br><br>
 
@@ -182,11 +204,13 @@
 
                 <!-- Customer Filter -->
                 <div id="customer-filter" style="margin-bottom: 10px; display: none;">
-                    <label for="gstcustomer">GST&Customer Name</label><br>
-                    <select name="gstcustomer" id="gstcustomer" class="large-select">
+                    <label for="customer_id">Customer</label><br>
+                    <select name="customer_id" id="customer_id" class="large-select">
                         <option value="" disabled selected>Select Customer</option>
                         {% for c in customers %}
-                        <option value="{{c[0]}}|{{c[1]}}">{{c[0]}}:{{c[1]}}</option>
+                        <option value="{{c.customer_id}}">
+                            {{ "RETAIL" if c.customer_type == "retail" else c.gst_number }}: {{ c.name }}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -243,6 +267,17 @@
             }
         }
 
+        function updateGstRequirement() {
+            const isRetail = document.getElementById("customer_type").value === "retail";
+            const gstField = document.getElementById("gst_number");
+            gstField.required = !isRetail;
+            gstField.disabled = isRetail;
+            if (isRetail) {
+                gstField.value = "";
+            }
+        }
+
+        updateGstRequirement();
 
         // let itemIndex = 0;
         // const form = document.getElementById('addcustomer');

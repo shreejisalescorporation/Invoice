@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE public.invoice_data
+    ADD COLUMN IF NOT EXISTS igst numeric NOT NULL DEFAULT 0;
+
+COMMIT;

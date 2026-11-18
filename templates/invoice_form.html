@@ -95,6 +95,46 @@
       display: none;
 
     }
+
+    #items-section .tax-rates-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0 12px;
+    }
+
+    #items-section .product-fields {
+      display: grid;
+      grid-template-columns: minmax(130px, 0.7fr) minmax(0, 1.3fr);
+      align-items: center;
+      column-gap: 14px;
+    }
+
+    #items-section .product-fields[hidden] {
+      display: none;
+    }
+
+    #items-section .large-select {
+      max-width: none;
+    }
+
+    #items-section .hsn-help {
+      grid-column: 2;
+      justify-self: start;
+    }
+
+    @media (max-width: 700px) {
+      #items-section .tax-rates-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #items-section .product-fields {
+        grid-template-columns: 1fr;
+      }
+
+      #items-section .hsn-help {
+        grid-column: 1;
+      }
+    }
   </style>
 </head>
 
@@ -110,7 +150,10 @@
           style="color: white; text-decoration: none; font-weight: bold;">Analytics</a>
       </li>
       <li>
-        <a href="{{ url_for('logout') }}" style="color: white; text-decoration: none; font-weight: bold;">Logout</a>
+        <form method="post" action="{{ url_for('logout') }}" style="display: inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" style="min-height: 0; padding: 5px 2px; border: 0; background: transparent; color: white;">Logout</button>
+        </form>
       </li>
     </ul>
   </nav>
@@ -142,9 +185,25 @@
         <select name="customer_name" id="customer_name" class="large-select">
           <option value="" disabled selected>Select Customer</option>
           {% for c in customers %}
-          <option value="{{c[0]}}|{{c[1]}}">{{c[0]}}:{{c[1]}}</option>
+          <option value="{{c.customer_id}}">
+            {{ "RETAIL" if c.customer_type == "retail" else c.gst_number }}: {{ c.name }}
+          </option>
           {% endfor %}
         </select>
+        <label for="vehicle_number">Vehicle Number</label>
+        <input type="text" id="vehicle_number" name="vehicle_number" class="large-select vehicle-number" placeholder="e.g. GJ 01 AB 1234">
+        <label for="eway_bill_number">E-Way Bill Number</label>
+        <input type="text" id="eway_bill_number" name="eway_bill_number" class="large-select" placeholder="E-Way Bill Number">
+        <label for="transport_mode">Transport Mode</label>
+        <select id="transport_mode" name="transport_mode" class="large-select">
+          <option value="" selected>Select Transport Mode</option>
+          <option value="Road">Road</option>
+          <option value="Rail">Rail</option>
+          <option value="Air">Air</option>
+          <option value="Ship">Ship</option>
+        </select>
+        <label for="transporter_id">Transporter ID</label>
+        <input type="text" id="transporter_id" name="transporter_id" class="large-select" placeholder="Transporter GSTIN / ID">
         <!-- <label for="customer_name">Customer Name</label>
         <input type="text" id="customer_name" name="customer_name" required>
 
@@ -156,15 +215,88 @@
 
         <div id="items-section">
           <h3>Items</h3>
-          <!-- Input fields always visible -->
-          <input type="text" id="desc" placeholder="Description" >
-          <input type="number" id="length" placeholder="Length (ft)" >
-          <input type="number" id="width" placeholder="Width (ft)" >
-          <input type="number" id="qty" placeholder="Qty" min="1" >
-          <input type="number" step="1" id="price" placeholder="Price" >
+          <h4>Add product</h4>
+          <label for="product_type">Product type</label>
+          <select id="product_type" class="large-select">
+            <option value="plywood">Plywood</option>
+            <option value="mdf">MDF</option>
+            <option value="block_board">Block Board</option>
+            <option value="flushdoor">Flushdoor</option>
+            <option value="laminates">Laminates</option>
+            <option value="hardware">Hardware</option>
+            <option value="adhesives">Adhesives</option>
+            <option value="timber">Timber</option>
+          </select>
+          <div class="product-fields item-common-fields">
+            <label for="item_description">Description</label>
+            <input type="text" id="item_description" class="large-select item-entry-control">
+            <label for="item_hsn">HSN Code</label>
+            <input type="text" id="item_hsn" class="large-select item-entry-control">
+            <small class="hsn-help">Auto-filled by product type; verify the code for the exact material and item.</small>
+          </div>
+
+          <div class="product-fields" data-product-fields="sheet">
+            <label for="ply_length">Length (ft)</label>
+            <input type="number" id="ply_length" class="large-select item-entry-control" min="0.000001" step="any">
+            <label for="ply_width">Width (ft)</label>
+            <input type="number" id="ply_width" class="large-select item-entry-control" min="0.000001" step="any">
+            <label for="ply_qty">Alternate quantity (Nos)</label>
+            <input type="number" id="ply_qty" class="large-select item-entry-control" min="0.000001" step="any">
+            <label for="ply_rate">Rate per sq.ft</label>
+            <input type="number" id="ply_rate" class="large-select item-entry-control" min="0" step="any">
+          </div>
+          <div class="product-fields" data-product-fields="count" hidden>
+            <label for="count_qty">Quantity</label>
+            <input type="number" id="count_qty" class="large-select item-entry-control" min="0.000001" step="any" disabled>
+            <label for="count_unit" id="count_unit_label">Unit</label>
+            <select id="count_unit" class="large-select item-entry-control" disabled>
+              <option value="Nos">Nos</option>
+              <option value="Pack">Pack</option>
+              <option value="Kg">Per Kg</option>
+            </select>
+            <label for="count_rate" id="count_rate_label">Rate per unit</label>
+            <input type="number" id="count_rate" class="large-select item-entry-control" min="0" step="any" disabled>
+          </div>
+          <div class="product-fields" data-product-fields="timber" hidden>
+            <label for="timber_length">Length (ft)</label>
+            <input type="number" id="timber_length" class="large-select item-entry-control" min="0.000001" step="any" disabled>
+            <label for="timber_width">Width (ft)</label>
+            <input type="number" id="timber_width" class="large-select item-entry-control" min="0.000001" step="any" disabled>
+            <label for="timber_thickness">Thickness (inches)</label>
+            <input type="number" id="timber_thickness" class="large-select item-entry-control" min="0.000001" step="any" disabled>
+            <label for="timber_qty">Alternate quantity (Nos)</label>
+            <input type="number" id="timber_qty" class="large-select item-entry-control" min="0.000001" step="any" disabled>
+            <label for="timber_rate">Rate per CFT</label>
+            <input type="number" id="timber_rate" class="large-select item-entry-control" min="0" step="any" disabled>
+          </div>
+          <div class="tax-rates-grid">
+            <div>
+              <label for="item_cgst_rate">CGST rate</label>
+              <select id="item_cgst_rate" class="large-select">
+                <option value="0">0%</option><option value="1.5">1.5%</option>
+                <option value="2.5">2.5%</option><option value="9" selected>9%</option>
+                <option value="20">20%</option>
+              </select>
+            </div>
+            <div>
+              <label for="item_sgst_rate">SGST rate</label>
+              <select id="item_sgst_rate" class="large-select">
+                <option value="0">0%</option><option value="1.5">1.5%</option>
+                <option value="2.5">2.5%</option><option value="9" selected>9%</option>
+                <option value="20">20%</option>
+              </select>
+            </div>
+            <div>
+              <label for="item_igst_rate">IGST rate</label>
+              <select id="item_igst_rate" class="large-select">
+                <option value="0" selected>0%</option><option value="3">3%</option>
+                <option value="5">5%</option><option value="18">18%</option>
+                <option value="40">40%</option>
+              </select>
+            </div>
+          </div>
           <br><button type="button" id="addItemBtn">Add Item</button>
 
-          <!-- List of added items -->
           <div id="items-list"></div>
 
           <br><label for="chcharge">Carting & Handling charges</label><br>
@@ -203,7 +335,9 @@
         <select name="customer_namemetal" id="customer_namemetal" class="large-select">
           <option value="" disabled selected>Select Customer</option>
           {% for c in customers %}
-          <option value="{{c[0]}}|{{c[1]}}">{{c[0]}}:{{c[1]}}</option>
+          <option value="{{c.customer_id}}">
+            {{ "RETAIL" if c.customer_type == "retail" else c.gst_number }}: {{ c.name }}
+          </option>
           {% endfor %}
         </select>
 
@@ -271,27 +405,123 @@
     let itemIndex = 0;
     const form = document.getElementById('invoiceForm');
     const list = document.getElementById('items-list');
-    document.getElementById('addItemBtn').addEventListener('click', () => {
-      // Collect values
-      const fields = ['desc', 'length', 'width', 'qty', 'price'];
-      const values = {};
-      for (let f of fields) {
-        const el = document.getElementById(f);
-        values[f] = el.value.trim();
-        if (!values[f]) {
-          alert('Please fill all item fields');
-          return;
-        }
+    const productType = document.getElementById('product_type');
+    const productGroups = document.querySelectorAll('[data-product-fields]');
+    const productLabels = {
+      plywood: 'Plywood',
+      mdf: 'MDF',
+      block_board: 'Block Board',
+      flushdoor: 'Flushdoor',
+      laminates: 'Laminate',
+      hardware: 'Hardware',
+      adhesives: 'Adhesives',
+      timber: 'Timber'
+    };
+    const defaultHsn = {
+      plywood: '4412',
+      mdf: '4411',
+      block_board: '4412',
+      flushdoor: '4418',
+      laminates: '3921',
+      hardware: '8302',
+      adhesives: '3506',
+      timber: '4407'
+    };
+
+    function productFieldGroup() {
+      if (['plywood', 'mdf', 'block_board', 'flushdoor'].includes(productType.value)) {
+        return 'sheet';
       }
+      if (productType.value === 'timber') {
+        return 'timber';
+      }
+      return 'count';
+    }
+
+    function updateDefaultHsn() {
+      const unit = document.getElementById('count_unit').value;
+      const hsn = productType.value === 'hardware' && unit === 'Kg'
+        ? '7318'
+        : defaultHsn[productType.value];
+      document.getElementById('item_hsn').value = hsn;
+    }
+
+    function updateProductFields() {
+      const activeFields = productFieldGroup();
+      productGroups.forEach((group) => {
+        const active = group.dataset.productFields === activeFields;
+        group.hidden = !active;
+        group.querySelectorAll('.item-entry-control').forEach((control) => {
+          control.disabled = !active;
+          control.required = false;
+        });
+      });
+      const isSelectableUnit = ['hardware', 'adhesives'].includes(productType.value);
+      document.getElementById('count_unit_label').hidden = !isSelectableUnit;
+      document.getElementById('count_unit').hidden = !isSelectableUnit;
+      if (!isSelectableUnit) {
+        document.getElementById('count_unit').value = 'Nos';
+      }
+      document.getElementById('count_qty').previousElementSibling.textContent =
+        productType.value === 'laminates' ? 'Quantity (Nos)' : 'Quantity';
+      document.getElementById('count_rate_label').textContent =
+        `Rate per ${document.getElementById('count_unit').value}`;
+      updateDefaultHsn();
+    }
+
+    productType.addEventListener('change', updateProductFields);
+    document.getElementById('count_unit').addEventListener('change', () => {
+      document.getElementById('count_rate_label').textContent =
+        `Rate per ${document.getElementById('count_unit').value}`;
+      updateDefaultHsn();
+    });
+    updateProductFields();
+
+    document.getElementById('addItemBtn').addEventListener('click', () => {
+      const activeGroup = document.querySelector(
+        `[data-product-fields="${productFieldGroup()}"]`
+      );
+      const controls = [
+        document.getElementById('item_description'),
+        document.getElementById('item_hsn'),
+        ...activeGroup.querySelectorAll('.item-entry-control')
+      ];
+      const invalidControl = controls.find(
+        (control) => !control.value.trim() || !control.checkValidity()
+      );
+      if (invalidControl) {
+        invalidControl.reportValidity();
+        return;
+      }
+
+      const value = (id) => document.getElementById(id)?.value.trim() || '';
+      const fieldSets = {
+        sheet: ['ply_length', 'ply_width', 'ply_qty', '', 'ply_rate'],
+        timber: ['timber_length', 'timber_width', 'timber_qty', '', 'timber_rate'],
+        count: ['', '', 'count_qty', 'count_unit', 'count_rate']
+      };
+      const [lengthField, widthField, qtyField, unitField, rateField] =
+        fieldSets[productFieldGroup()];
+      const length = lengthField ? value(lengthField) : '';
+      const width = widthField ? value(widthField) : '';
+      const thickness = productType.value === 'timber' ? value('timber_thickness') : '';
+      const quantity = value(qtyField);
+      const unit = productType.value === 'laminates' ? 'Nos' : value(unitField);
+      const rate = value(rateField);
       itemIndex++;
-      // Create hidden inputs
-      // Create one hidden input per item, storing JSON array
       const itemArr = [
-        values.desc,
-        parseFloat(values.length),
-        parseFloat(values.width),
-        parseInt(values.qty),
-        parseFloat(values.price)
+        productType.value,
+        value('item_description'),
+        value('item_hsn'),
+        length,
+        width,
+        thickness,
+        quantity,
+        unit,
+        rate,
+        value('item_cgst_rate'),
+        value('item_sgst_rate'),
+        value('item_igst_rate')
       ];
       const hidden = document.createElement('input');
       hidden.type = 'hidden';
@@ -303,23 +533,36 @@
       const box = document.createElement('div');
       box.className = 'item-box';
       box.dataset.index = itemIndex;
-      box.innerHTML = `
-          <span>${values.desc}</span>
-          <span>${values.length}ft × ${values.width}ft</span>
-          <span>Qty: ${values.qty}</span>
-          <span>₹${values.price} per sq.ft</span>
-          <button type="button" class="remove-btn">&minus;</button>
-        `;
+      [
+        productLabels[productType.value],
+        value('item_description'),
+        length && width ? `${length}ft × ${width}ft` : '',
+        thickness ? `${thickness}in` : '',
+        `Qty: ${quantity} ${unit || (productType.value === 'timber' ? 'Nos' : '')}`,
+        `Rate: ₹${rate}`
+      ].forEach((text) => {
+        if (text) {
+          const detail = document.createElement('span');
+          detail.textContent = text;
+          box.appendChild(detail);
+        }
+      });
+      const removeButton = document.createElement('button');
+      removeButton.type = 'button';
+      removeButton.className = 'remove-btn';
+      removeButton.textContent = '−';
+      removeButton.setAttribute('aria-label', 'Remove item');
+      box.appendChild(removeButton);
       list.appendChild(box);
-      // Clear inputs
-      fields.forEach(f => document.getElementById(f).value = '');
-      // Remove handler
+      controls.forEach((control) => {
+        if (control !== document.getElementById('count_unit')) {
+          control.value = '';
+        }
+      });
+      updateDefaultHsn();
       box.querySelector('.remove-btn').addEventListener('click', () => {
-        // Remove corresponding hidden input
-        const inp = form.querySelector(`input[name="items[]"][data-index="${itemIndex}"]`);
-        if (inp) form.removeChild(inp);
-        // Remove summary box
-        list.removeChild(box);
+        hidden.remove();
+        box.remove();
       });
     });
 
@@ -379,23 +622,29 @@
       const boxmetal = document.createElement('div');
       boxmetal.className = 'item-box';
       boxmetal.dataset.index = itemIndexmetal;
-      boxmetal.innerHTML = `
-          <span>${valuesmetal.descmetal}</span>
-          <span>HSN:${valuesmetal.hsnmetal}</span>
-          <span> ${valuesmetal.qtymetal} kgs </span>
-          <span>₹${valuesmetal.pricemetal} per kilograms</span>
-          <button type="button" class="remove-btn">&minus;</button>
-        `;
+      [
+        valuesmetal.descmetal,
+        `HSN:${valuesmetal.hsnmetal}`,
+        `${valuesmetal.qtymetal} kgs`,
+        `₹${valuesmetal.pricemetal} per kilograms`
+      ].forEach((text) => {
+        const detail = document.createElement('span');
+        detail.textContent = text;
+        boxmetal.appendChild(detail);
+      });
+      const removeButtonmetal = document.createElement('button');
+      removeButtonmetal.type = 'button';
+      removeButtonmetal.className = 'remove-btn';
+      removeButtonmetal.textContent = '−';
+      removeButtonmetal.setAttribute('aria-label', 'Remove item');
+      boxmetal.appendChild(removeButtonmetal);
       listmetal.appendChild(boxmetal);
       // Clear inputs
       fieldsmetal.forEach(f => document.getElementById(f).value = '');
       // Remove handler
       boxmetal.querySelector('.remove-btn').addEventListener('click', () => {
-        // Remove corresponding hidden input
-        const inpmetal = formmetal.querySelector(`input[name="items[]"][data-index="${itemIndexmetal}"]`);
-        if (inpmetal) formmetal.removeChild(inpmetal);
-        // Remove summary box
-        listmetal.removeChild(boxmetal);
+        hiddenmetal.remove();
+        boxmetal.remove();
       });
     });
   </script>
