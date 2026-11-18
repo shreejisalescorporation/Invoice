@@ -176,16 +176,16 @@
         <h2 class="section-heading">Bill To</h2>
         <p class="party-name">{{ customer_name }}</p>
         <p>Address: {% for line in Address_lines|default([]) %}{% if not loop.first %}<br>{% endif %}{{ line }}{% else %}{{ Address }}{% endfor %}</p>
-        {% if customer_mobile %}<p>Mobile: {{ customer_mobile }}</p>{% endif %}
-        {% if customer_email %}<p>Email: {{ customer_email }}</p>{% endif %}
+        <p>Mobile: {{ customer_mobile|default('', true) }}</p>
+        <p>Email: {{ customer_email|default('', true) }}</p>
         <p>{% if customer_type == "retail" %}RETAIL{% else %}GSTIN: {{ GSTno }}{% endif %}</p>
       </div>
       <div class="party">
         <h2 class="section-heading">Ship To</h2>
         <p class="party-name">{{ customer_name }}</p>
         <p>Address: {% for line in Address_lines|default([]) %}{% if not loop.first %}<br>{% endif %}{{ line }}{% else %}{{ Address }}{% endfor %}</p>
-        {% if customer_mobile %}<p>Mobile: {{ customer_mobile }}</p>{% endif %}
-        {% if customer_email %}<p>Email: {{ customer_email }}</p>{% endif %}
+        <p>Mobile: {{ customer_mobile|default('', true) }}</p>
+        <p>Email: {{ customer_email|default('', true) }}</p>
         <p>{% if customer_type == "retail" %}RETAIL{% else %}GSTIN: {{ GSTno }}{% endif %}</p>
       </div>
     </section>

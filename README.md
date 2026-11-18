@@ -60,10 +60,12 @@ check path.
 Set `FLASK_USERS_JSON` to a JSON object mapping usernames to Werkzeug password
 hashes; the empty example value does not create a login account.
 
-For Google Drive, configure either `GOOGLE_SERVICE_ACCOUNT_JSON` (or
-`GOOGLE_SERVICE_ACCOUNT_JSON_BASE64`) or the OAuth variables shown in
-`.env.example`. The service account must have access to the invoice and
-statement folders. Rotate any credentials that have previously been committed.
+For Google Drive uploads to a user's My Drive, configure the OAuth 2.0 client
+ID, client secret, and refresh token shown in `.env.example`. When OAuth is
+configured it takes precedence over service-account settings. The authorized
+Google user must have access to the invoice and statement folders. Service
+accounts are supported only for Shared Drives with available storage. Rotate
+any credentials that have previously been committed.
 
 For local development, copy `.env.example` to `.env`, set local values, and run
 `python app.py`. The development server is bound to localhost; use `APP_PORT` to

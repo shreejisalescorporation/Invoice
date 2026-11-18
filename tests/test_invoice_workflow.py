@@ -2,6 +2,9 @@ import os
 import unittest
 from unittest.mock import call, patch
 
+from googleapiclient.errors import HttpError
+from httplib2 import Response
+
 os.environ.setdefault("FLASK_SECRET_KEY", "test-session-secret")
 os.environ.setdefault("WTF_CSRF_SECRET_KEY", "test-csrf-secret")
 os.environ.setdefault("FLASK_USERS_JSON", "{}")
@@ -35,6 +38,52 @@ def invoice_context():
 
 
 class InvoiceWorkflowTests(unittest.TestCase):
+    def test_drive_upload_supports_shared_drives(self):
+        service = unittest.mock.Mock()
+        service.files.return_value.create.return_value.execute.return_value = {
+            "id": "drive-file-1",
+            "webViewLink": "https://drive.example/file-1",
+        }
+        with (
+            patch.object(app, "INVOICE_FOLDER_ID", "shared-folder"),
+            patch.object(app, "get_drive_service", return_value=service),
+        ):
+            result = app.upload_pdf(b"%PDF-1.7", "invoice.pdf", "invoice")
+
+        self.assertEqual(result, ("drive-file-1", "https://drive.example/file-1"))
+        kwargs = service.files.return_value.create.call_args.kwargs
+        self.assertEqual(kwargs["body"]["parents"], ["shared-folder"])
+        self.assertTrue(kwargs["supportsAllDrives"])
+        self.assertEqual(kwargs["media_body"].mimetype(), "application/pdf")
+
+    def test_drive_storage_quota_error_explains_required_configuration(self):
+        service = unittest.mock.Mock()
+        quota_error = HttpError(
+            Response({"status": "403", "reason": "Forbidden"}),
+            b'{"error":{"errors":[{"reason":"storageQuotaExceeded"}]}}',
+            uri="https://www.googleapis.com/upload/drive/v3/files",
+        )
+        service.files.return_value.create.return_value.execute.side_effect = quota_error
+        with (
+            patch.object(app, "INVOICE_FOLDER_ID", "my-drive-folder"),
+            patch.object(app, "get_drive_service", return_value=service),
+        ):
+            with self.assertRaisesRegex(
+                app.DriveStorageQuotaError,
+                "Shared Drive",
+            ):
+                app.upload_pdf(b"%PDF-1.7", "invoice.pdf", "invoice")
+
+    def test_shared_drive_cleanup_sets_supports_all_drives(self):
+        service = unittest.mock.Mock()
+        with patch.object(app, "get_drive_service", return_value=service):
+            app.delete_uploaded_pdf("drive-file-1")
+
+        service.files.return_value.delete.assert_called_once_with(
+            fileId="drive-file-1",
+            supportsAllDrives=True,
+        )
+
     def test_ply_pdf_request_uses_pdfbolt_supported_options(self):
         with (
             patch.object(app, "render_template", return_value="<html></html>"),
@@ -56,7 +105,13 @@ class InvoiceWorkflowTests(unittest.TestCase):
         with (
             patch.dict(
                 os.environ,
-                {"GOOGLE_SERVICE_ACCOUNT_JSON": '{"type":"service_account"}'},
+                {
+                    "GOOGLE_SERVICE_ACCOUNT_JSON": '{"type":"service_account"}',
+                    "GOOGLE_CLIENT_ID": "",
+                    "GOOGLE_CLIENT_SECRET": "",
+                    "GOOGLE_REFRESH_TOKEN": "",
+                    "GOOGLE_OAUTH_CLIENT_JSON": "",
+                },
             ),
             patch.object(
                 app.service_account.Credentials,
@@ -78,6 +133,90 @@ class InvoiceWorkflowTests(unittest.TestCase):
             credentials=credentials,
             cache_discovery=False,
         )
+
+    def test_oauth_credentials_take_precedence_over_service_account(self):
+        credentials = unittest.mock.Mock()
+        with (
+            patch.dict(
+                os.environ,
+                {
+                    "GOOGLE_CLIENT_ID": "oauth-client-id",
+                    "GOOGLE_CLIENT_SECRET": "oauth-client-secret",
+                    "GOOGLE_REFRESH_TOKEN": "oauth-refresh-token",
+                    "GOOGLE_SERVICE_ACCOUNT_JSON": '{"type":"service_account"}',
+                },
+            ),
+            patch.object(app, "Credentials", return_value=credentials) as create_credentials,
+            patch.object(app, "GoogleAuthRequest") as auth_request,
+            patch.object(app, "_service_account_credentials") as service_account_credentials,
+            patch.object(app, "build", return_value="drive-service") as build_service,
+        ):
+            result = app.get_drive_service()
+
+        self.assertEqual(result, "drive-service")
+        create_credentials.assert_called_once_with(
+            token=None,
+            refresh_token="oauth-refresh-token",
+            token_uri="https://oauth2.googleapis.com/token",
+            client_id="oauth-client-id",
+            client_secret="oauth-client-secret",
+            scopes=app.SCOPES,
+        )
+        credentials.refresh.assert_called_once_with(auth_request.return_value)
+        service_account_credentials.assert_not_called()
+        build_service.assert_called_once_with(
+            "drive",
+            "v3",
+            credentials=credentials,
+            cache_discovery=False,
+        )
+
+    def test_oauth_client_json_can_supply_client_id_and_secret(self):
+        credentials = unittest.mock.Mock()
+        with (
+            patch.dict(
+                os.environ,
+                {
+                    "GOOGLE_CLIENT_ID": "",
+                    "GOOGLE_CLIENT_SECRET": "",
+                    "GOOGLE_REFRESH_TOKEN": "oauth-refresh-token",
+                    "GOOGLE_OAUTH_CLIENT_JSON": (
+                        '{"web":{"client_id":"json-client-id",'
+                        '"client_secret":"json-client-secret"}}'
+                    ),
+                },
+            ),
+            patch.object(app, "Credentials", return_value=credentials) as create_credentials,
+            patch.object(app, "GoogleAuthRequest"),
+        ):
+            result = app._oauth_credentials()
+
+        self.assertIs(result, credentials)
+        create_credentials.assert_called_once_with(
+            token=None,
+            refresh_token="oauth-refresh-token",
+            token_uri="https://oauth2.googleapis.com/token",
+            client_id="json-client-id",
+            client_secret="json-client-secret",
+            scopes=app.SCOPES,
+        )
+
+    def test_incomplete_oauth_configuration_fails_instead_of_using_service_account(self):
+        with patch.dict(
+            os.environ,
+            {
+                "GOOGLE_CLIENT_ID": "oauth-client-id",
+                "GOOGLE_CLIENT_SECRET": "",
+                "GOOGLE_REFRESH_TOKEN": "",
+                "GOOGLE_SERVICE_ACCOUNT_JSON": '{"type":"service_account"}',
+                "GOOGLE_OAUTH_CLIENT_JSON": "",
+            },
+        ):
+            with self.assertRaisesRegex(
+                RuntimeError,
+                "GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN",
+            ):
+                app.get_drive_service()
 
     def test_pdfbolt_http_error_includes_provider_error_details(self):
         response = unittest.mock.Mock()

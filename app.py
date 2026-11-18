@@ -17,9 +17,9 @@ from flask_login import (
 )
 from num2words import num2words
 import base64
+from io import BytesIO
 import requests
 from supabase import Client, create_client
-import tempfile
 import json
 import os
 import math
@@ -31,7 +31,9 @@ from werkzeug.security import check_password_hash
 from flask_wtf import CSRFProtect
 from flask_wtf.csrf import generate_csrf
 from postgrest.exceptions import APIError
-from googleapiclient.http import MediaFileUpload
+from google.auth.transport.requests import Request as GoogleAuthRequest
+from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaIoBaseUpload
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 from google.oauth2 import service_account
@@ -47,25 +49,47 @@ INVOICE_FOLDER_ID = os.getenv("INVOICE_FOLDER_ID")
 STATEMENT_FOLDER_ID = os.getenv("STATEMENT_FOLDER_ID")
 
 
-def get_access_token():
-    credentials = {
-        "client_id": os.getenv("GOOGLE_CLIENT_ID"),
-        "client_secret": os.getenv("GOOGLE_CLIENT_SECRET"),
-        "refresh_token": os.getenv("GOOGLE_REFRESH_TOKEN"),
-    }
-    missing = [name for name, value in credentials.items() if not value]
+def _oauth_credentials():
+    client_id = os.getenv("GOOGLE_CLIENT_ID")
+    client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
+    refresh_token = os.getenv("GOOGLE_REFRESH_TOKEN")
+    oauth_config = os.getenv("GOOGLE_OAUTH_CLIENT_JSON")
+
+    if oauth_config and (not client_id or not client_secret):
+        config = json.loads(oauth_config)
+        client = config.get("installed") or config.get("web") or config
+        client_id = client_id or client.get("client_id")
+        client_secret = client_secret or client.get("client_secret")
+
+    configured = (client_id, client_secret, refresh_token)
+    if not any(configured):
+        return None
+
+    missing = [
+        name
+        for name, value in (
+            ("GOOGLE_CLIENT_ID", client_id),
+            ("GOOGLE_CLIENT_SECRET", client_secret),
+            ("GOOGLE_REFRESH_TOKEN", refresh_token),
+        )
+        if not value
+    ]
     if missing:
         raise RuntimeError(
             "Google Drive OAuth configuration is incomplete: "
             + ", ".join(missing)
         )
-    resp = requests.post(
-        "https://oauth2.googleapis.com/token",
-        data={**credentials, "grant_type": "refresh_token"},
-        timeout=(5, 20),
+
+    credentials = Credentials(
+        token=None,
+        refresh_token=refresh_token,
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=client_id,
+        client_secret=client_secret,
+        scopes=SCOPES,
     )
-    resp.raise_for_status()
-    return resp.json()["access_token"]
+    credentials.refresh(GoogleAuthRequest())
+    return credentials
 
 
 def _service_account_credentials():
@@ -101,32 +125,60 @@ def _service_account_credentials():
     )
 
 def get_drive_service():
-    creds = _service_account_credentials()
+    creds = _oauth_credentials()
     if creds is None:
-        creds = Credentials(get_access_token())
+        creds = _service_account_credentials()
+    if creds is None:
+        raise RuntimeError(
+            "Google Drive authentication is not configured. Set OAuth client "
+            "credentials and a refresh token, or configure a service account."
+        )
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
     return service
 
-def upload_pdf(filepath: str, filename: str, to_folder: str):
+class DriveStorageQuotaError(RuntimeError):
+    pass
+
+
+def upload_pdf(pdf: bytes, filename: str, to_folder: str):
     folder_id = INVOICE_FOLDER_ID if to_folder.lower() == "invoice" else STATEMENT_FOLDER_ID
     if not folder_id:
         raise RuntimeError("Folder ID not configured in INVOICE_FOLDER_ID / STATEMENT_FOLDER_ID")
 
     service = get_drive_service()
-    media = MediaFileUpload(filepath, mimetype="application/pdf")
+    media = MediaIoBaseUpload(BytesIO(pdf), mimetype="application/pdf")
     file_metadata = {"name": filename, "parents": [folder_id]}
 
-    res = service.files().create(
-        body=file_metadata,
-        media_body=media,
-        fields="id, webViewLink"
-    ).execute()
+    try:
+        res = service.files().create(
+            body=file_metadata,
+            media_body=media,
+            fields="id, webViewLink",
+            supportsAllDrives=True,
+        ).execute()
+    except HttpError as exc:
+        try:
+            error_response = json.loads(exc.content.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            error_response = {}
+        errors = error_response.get("error", {}).get("errors", [])
+        if any(
+            error.get("reason") == "storageQuotaExceeded"
+            for error in errors
+            if isinstance(error, dict)
+        ):
+            raise DriveStorageQuotaError(
+                "Google Drive rejected the upload because the authenticated account "
+                "has no available storage quota. For a service account, use a Shared "
+                "Drive; for OAuth, free space in the authorized user's Drive."
+            ) from exc
+        raise
     return res.get("id"), res.get("webViewLink")
 
 
 def delete_uploaded_pdf(file_id: str):
     service = get_drive_service()
-    service.files().delete(fileId=file_id).execute()
+    service.files().delete(fileId=file_id, supportsAllDrives=True).execute()
 
 
 
@@ -376,6 +428,10 @@ def load_customers():
 #         return jsonify({"status":"error","message":str(e)}),500
 #     return add
 def _format_customer_invoice_details(customer):
+    def contact_value(field):
+        value = (customer.get(field) or "").strip()
+        return "" if value.casefold() in {"na", "n/a"} else value
+
     def address_value(field, label):
         value = (customer.get(field) or "").strip()
         return re.sub(
@@ -408,8 +464,8 @@ def _format_customer_invoice_details(customer):
     return {
         "address": "\n".join(address_lines),
         "address_lines": address_lines,
-        "mobile": (customer.get("mobile") or "").strip(),
-        "email": (customer.get("email") or "").strip(),
+        "mobile": contact_value("mobile"),
+        "email": contact_value("email"),
         "customer_id": customer["customer_id"],
         "customer_type": customer["customer_type"],
         "name": customer["name"],
@@ -1023,20 +1079,14 @@ def _request_pdf(rendered_html, **options):
 
 
 def _upload_pdf_content(pdf, filename, folder):
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
-        tmp.write(pdf)
-        temp_path = tmp.name
-    try:
-        file_id, drive_link = upload_pdf(
-            filepath=temp_path,
-            filename=filename,
-            to_folder=folder
-        )
-        if not file_id:
-            raise RuntimeError("Google Drive did not return an uploaded file ID.")
-        return file_id, drive_link
-    finally:
-        os.remove(temp_path)
+    file_id, drive_link = upload_pdf(
+        pdf=pdf,
+        filename=filename,
+        to_folder=folder
+    )
+    if not file_id:
+        raise RuntimeError("Google Drive did not return an uploaded file ID.")
+    return file_id, drive_link
 
 
 class InvoiceProcessingError(RuntimeError):
@@ -1152,6 +1202,10 @@ def generate_pdf():
         return redirect(url_for("invoice_form"))
     except InvoiceProcessingError as exc:
         app.logger.exception("Invoice processing compensation was required.")
+        flash(str(exc), "danger")
+        return redirect(url_for("invoice_form"))
+    except DriveStorageQuotaError as exc:
+        app.logger.exception("Google Drive has no storage quota for the configured account.")
         flash(str(exc), "danger")
         return redirect(url_for("invoice_form"))
     except Exception:

@@ -2,6 +2,7 @@ import os
 import unittest
 from datetime import datetime
 import json
+import re
 from unittest.mock import Mock, patch
 
 os.environ.setdefault("FLASK_SECRET_KEY", "test-session-secret")
@@ -130,6 +131,73 @@ class CustomerInvoiceDetailsTests(unittest.TestCase):
         self.assertEqual(details["mobile"], "")
         self.assertEqual(details["email"], "")
         self.assertEqual(details["gst_number"], "")
+
+    def test_na_contact_values_are_blank_without_affecting_other_contact(self):
+        details = app._format_customer_invoice_details({
+            "mobile": " N/A ",
+            "email": "customer@example.com",
+            "customer_id": "customer-5",
+            "customer_type": "retail",
+            "name": "Retail Customer",
+            "gst_number": None,
+        })
+
+        self.assertEqual(details["mobile"], "")
+        self.assertEqual(details["email"], "customer@example.com")
+
+    def test_invoice_bill_keeps_both_contact_labels_when_one_value_is_blank(self):
+        context = {
+            "item_pages": [[]],
+            "Address_lines": [],
+            "Address": "",
+            "Addressmetal": "",
+            "items": [],
+            "tax_summary": [],
+            "invoice_no": 1,
+            "invoice_nometal": 1,
+            "date": "18 November 2026",
+            "datemetal": "18 November 2026",
+            "customer_name": "Sample Customer",
+            "customer_namemetal": "Sample Customer",
+            "customer_type": "retail",
+            "GSTno": "",
+            "subtotal": 0,
+            "chcharge": 0,
+            "taxable_value": 0,
+            "cgst": 0,
+            "sgst": 0,
+            "igst": 0,
+            "grandtotal": 0,
+            "grandtotal_words": "",
+            "hsn": [],
+            "item_columns": [],
+            "item_column_widths": [],
+            "product_types": [],
+        }
+        cases = (
+            {"customer_mobile": "", "customer_email": "email-marker@example.test"},
+            {"customer_mobile": "mobile-marker", "customer_email": ""},
+        )
+
+        with app.app.app_context():
+            for template_name in ("invoiceply.html", "invoicemetal.html"):
+                template = app.app.jinja_env.get_template(template_name)
+                for contacts in cases:
+                    with self.subTest(template=template_name, contacts=contacts):
+                        rendered = template.render(**context, **contacts)
+                        bill_text = re.sub(
+                            r"\s+",
+                            " ",
+                            re.sub(r"<[^>]*>", " ", rendered),
+                        )
+                        self.assertIn("Mobile:", bill_text)
+                        self.assertIn("Email:", bill_text)
+                        for field, value in contacts.items():
+                            marker = "mobile-marker" if field == "customer_mobile" else "email-marker@example.test"
+                            if value:
+                                self.assertIn(marker, bill_text)
+                            else:
+                                self.assertNotIn(marker, bill_text)
 
     def test_retail_invoice_stores_no_gst_number(self):
         payload = app._invoice_record_payload(1, {

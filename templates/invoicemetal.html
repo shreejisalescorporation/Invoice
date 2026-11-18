@@ -3300,9 +3300,9 @@
       </tr>
       <tr class="row6">
         <td class="column0 style53 null style56" colspan="2" rowspan="3">Bill
-          To:{{customer_namemetal}}<br>Address: {% for line in Address_lines|default([]) %}{% if not loop.first %}<br>{% endif %}{{line}}{% else %}{{Addressmetal}}{% endfor %}{% if customer_mobile %}<br>Mobile: {{customer_mobile}}{% endif %}{% if customer_email %}<br>Email: {{customer_email}}{% endif %}</td>
+          To:{{customer_namemetal}}<br>Address: {% for line in Address_lines|default([]) %}{% if not loop.first %}<br>{% endif %}{{line}}{% else %}{{Addressmetal}}{% endfor %}<br>Mobile: {{customer_mobile|default('', true)}}<br>Email: {{customer_email|default('', true)}}</td>
         <td class="column2 style53 null style56" colspan="3" rowspan="3">Ship
-          To:{{customer_namemetal}}<br>Address: {% for line in Address_lines|default([]) %}{% if not loop.first %}<br>{% endif %}{{line}}{% else %}{{Addressmetal}}{% endfor %}{% if customer_mobile %}<br>Mobile: {{customer_mobile}}{% endif %}{% if customer_email %}<br>Email: {{customer_email}}{% endif %}</td>
+          To:{{customer_namemetal}}<br>Address: {% for line in Address_lines|default([]) %}{% if not loop.first %}<br>{% endif %}{{line}}{% else %}{{Addressmetal}}{% endfor %}<br>Mobile: {{customer_mobile|default('', true)}}<br>Email: {{customer_email|default('', true)}}</td>
         <td class="column5 style57 s style59" rowspan="2">INVOICE No</td>
         <td class="column6 style60 s style62" rowspan="2">Date</td>
 
